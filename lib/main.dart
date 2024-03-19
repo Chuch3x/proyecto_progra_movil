@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_progra_movil/home-page.dart';
 
 //custom MENU icon
 const IconData menu = IconData(0xe3dc, fontFamily: 'MaterialIcons');
@@ -50,53 +51,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                // Handle menu icon pressed
-              },
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: TextField(
-                  style: TextStyle(fontSize: 12.0),
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    prefixIcon: Icon(Icons.search,
-                        color: Colors.grey), // Set icon color
-                    hintStyle:
-                        TextStyle(color: Colors.grey), // Set hint text color
-                  ),
-                  onChanged: (value) {
-                    // Handle search input
-                  },
-                ),
-              ),
-            ),
-            IconButton(
-              icon: Icon(Icons.account_circle),
-              onPressed: () {
-                // Handle profile icon pressed
-              },
-            ),
-          ],
-        ),
-      ),
-      body: Center(
-        child: Text('Your Content Here'),
-      ),
+    return const Scaffold(
+      body: HomePage(),
     );
   }
 }
-//pososads
