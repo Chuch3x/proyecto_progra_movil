@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:proyecto_progra_movil/register.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -8,7 +10,7 @@ class LoginScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/image.png'),
+          image: AssetImage('assets/images/silpancho-background-homepage.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -18,8 +20,9 @@ class LoginScreen extends StatelessWidget {
           Text(
             'RUTA GOURMET',
             style: TextStyle(
-              fontSize: 24.0,
+              fontSize: 36.0,
               fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
               color: Colors.white,
             ),
           ),
@@ -34,6 +37,25 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Container(
+                    alignment: Alignment
+                        .center, // Alinea el contenido al centro del contenedor
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(97, 89, 206, 143),
+                    ),
+                    child: FittedBox(
+                      fit: BoxFit
+                          .cover, // Hace que el texto ocupe todo el espacio disponible
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
                   Text(
                     'Bienvenido a RutaGourmet',
                     style: TextStyle(
@@ -70,7 +92,10 @@ class LoginScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      // Acción de registro
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Register()),
+                      );
                     },
                     child: Text('Eres nuevo? regístrate'),
                   ),
