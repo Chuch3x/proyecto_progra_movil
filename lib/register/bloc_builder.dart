@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -8,6 +10,10 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterState extends State<RegisterScreen> {
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _password2Controller = TextEditingController();
   BoxDecoration _buildBackgroundDecoration() {
     return const BoxDecoration(
       image: DecorationImage(
@@ -29,22 +35,39 @@ class _RegisterState extends State<RegisterScreen> {
     );
   }
 
-  TextFormField _texValidation() {
+  TextFormField userValidation(final String textHint) {
     return TextFormField(
-      decoration: const InputDecoration(
+      controller: _userController,
+      decoration: InputDecoration(
         icon: Icon(Icons.person),
-        hintText: 'What do people call you?',
-        labelText: 'Name *',
+        labelText: textHint,
       ),
-      onSaved: (String? value) {
-        // This optional block of code can be used to run
-        // code when the user saves the form.
-      },
+    );
+  }
+
+  TextFormField mailValidation(final String textHint) {
+    return TextFormField(
+      controller: _emailController,
+      decoration: InputDecoration(
+        icon: Icon(Icons.mail),
+        labelText: textHint,
+      ),
       validator: (String? value) {
-        return (value != null && value.contains('@'))
-            ? 'Do not use the @ char.'
+        return (value != null && !value.contains('@'))
+            ? 'Use the @ char.'
             : null;
       },
+    );
+  }
+
+  TextFormField passwordValidation(final String textHint, final int type) {
+    return TextFormField(
+      controller: type == 0 ? _passwordController : _password2Controller,
+      decoration: InputDecoration(
+        icon: Icon(Icons.lock),
+        labelText: textHint,
+      ),
+      obscureText: true,
     );
   }
 
@@ -53,8 +76,11 @@ class _RegisterState extends State<RegisterScreen> {
     return Card(
       child: Form(
         key: _formKey,
-        child: const Column(children: <TextFormField>[
-          // Add TextFormFields and ElevatedButton here.
+        child: Column(children: <TextFormField>[
+          mailValidation("Correo *"),
+          userValidation("Nombre de Usuario *"),
+          passwordValidation("Contraseña *", 0),
+          passwordValidation("Repita la contraseña *", 1),
         ]),
       ),
     );
