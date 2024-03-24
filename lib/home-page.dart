@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_progra_movil/login.dart';
-import 'package:proyecto_progra_movil/register.dart';
+import 'package:proyecto_progra_movil/register/bloc_builder.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -57,7 +57,8 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () => _navigate(context, const LoginScreen()),
+                        onPressed: () =>
+                            _navigate(context, const LoginScreen()),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromRGBO(89, 206, 143, 1),
@@ -74,7 +75,8 @@ class HomePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () => _navigate(context, const Register()),
+                        onPressed: () =>
+                            _navigate(context, const RegisterScreen()),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromRGBO(89, 206, 143, 1),
