@@ -12,15 +12,15 @@ ThemeData defaultTheme = ThemeData(
     // fontFamily: 'Pangolin',
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: Color.fromRGBO(89, 206, 143, 1),
-      brightness: Brightness.dark,
+      seedColor: const Color.fromRGBO(89, 206, 143, 1),
+      brightness: Brightness.light,
     ),
     primaryColor: Colors.lightGreenAccent,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
         color: Color.fromRGBO(89, 206, 143, 1),
         iconTheme: IconThemeData(color: Colors.white)),
-    textTheme: TextTheme(
-        displayLarge: const TextStyle(
+    textTheme: const TextTheme(
+        displayLarge: TextStyle(
       fontSize: 72,
       fontWeight: FontWeight.bold,
     )));

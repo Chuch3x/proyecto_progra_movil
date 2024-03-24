@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:proyecto_progra_movil/register.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -8,7 +7,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/silpancho-background-homepage.jpg'),
           fit: BoxFit.cover,
@@ -17,7 +16,7 @@ class LoginScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'RUTA GOURMET',
             style: TextStyle(
               fontSize: 36.0,
@@ -26,7 +25,7 @@ class LoginScreen extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           Card(
             elevation: 8.0,
             shape: RoundedRectangleBorder(
@@ -40,10 +39,10 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     alignment: Alignment
                         .center, // Alinea el contenido al centro del contenedor
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color.fromARGB(97, 89, 206, 143),
                     ),
-                    child: FittedBox(
+                    child: const FittedBox(
                       fit: BoxFit
                           .cover, // Hace que el texto ocupe todo el espacio disponible
                       child: Text(
@@ -55,49 +54,49 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16.0),
-                  Text(
+                  const SizedBox(height: 16.0),
+                  const Text(
                     'Bienvenido a RutaGourmet',
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 16.0),
-                  TextField(
+                  const SizedBox(height: 16.0),
+                  const TextField(
                     decoration: InputDecoration(
                       labelText: 'Usuario',
                     ),
                   ),
-                  SizedBox(height: 16.0),
-                  TextField(
+                  const SizedBox(height: 16.0),
+                  const TextField(
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: 'Contaseña',
                     ),
                   ),
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24.0),
                   ElevatedButton(
                     onPressed: () {
                       // Acción de inicio de sesión
                     },
-                    child: Text('Log in'),
+                    child: const Text('Log in'),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   TextButton(
                     onPressed: () {
                       // Acción de olvidar contraseña
                     },
-                    child: Text('Forgot Password?'),
+                    child: const Text('Forgot Password?'),
                   ),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Register()),
+                        MaterialPageRoute(builder: (context) => const Register()),
                       );
                     },
-                    child: Text('Eres nuevo? regístrate'),
+                    child: const Text('Eres nuevo? regístrate'),
                   ),
                 ],
               ),

@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () => _navigate(context, LoginScreen()),
+                        onPressed: () => _navigate(context, const LoginScreen()),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromRGBO(89, 206, 143, 1),
@@ -74,7 +74,7 @@ class HomePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () => _navigate(context, Register()),
+                        onPressed: () => _navigate(context, const Register()),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromRGBO(89, 206, 143, 1),
