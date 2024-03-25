@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_progra_movil/login.dart';
@@ -47,7 +45,7 @@ class _RegisterState extends State<RegisterScreen> {
         labelText: textHint,
       ),
       validator: (String? value) {
-        return (!value!.isEmpty) ? "Llene el nombre de usuario" : null;
+        return (value!.isEmpty) ? "Llene el nombre de usuario" : null;
       },
     );
   }
@@ -76,7 +74,7 @@ class _RegisterState extends State<RegisterScreen> {
       ),
       obscureText: true,
       validator: (String? value) {
-        return (!value!.isEmpty) ? "Ingrese una contraseña" : null;
+        return (value!.isEmpty) ? "Ingrese una contraseña" : null;
       },
     );
   }
@@ -100,11 +98,13 @@ class _RegisterState extends State<RegisterScreen> {
     final _formKey = GlobalKey<FormState>();
 
     void _navigate(BuildContext context, Widget page) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => page,
-        ),
-      );
+      Future.delayed(Duration(milliseconds: 800), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => page,
+          ),
+        );
+      });
     }
 
     return Container(
@@ -117,7 +117,7 @@ class _RegisterState extends State<RegisterScreen> {
             if (state is RegisterWaiting) {
               return _buildCardForms(_formKey);
             } else if (state is RegisterSuccesful) {
-              // _navigate(context, LoginScreen());
+              _navigate(context, LoginScreen());
               return const Text("REGISTRO EXITOSO");
             } else {
               _userController.clear();
@@ -129,8 +129,11 @@ class _RegisterState extends State<RegisterScreen> {
           }),
           ElevatedButton(
             onPressed: () {
-              context.read<RegisterCubit>().validateRegisterData(_formKey,
-                  _passwordController.value, _password2Controller.value);
+              final FormState form = _formKey.currentState!;
+              if (form.validate()) {
+                context.read<RegisterCubit>().passwordValidation(
+                    _passwordController.text, _password2Controller.text);
+              }
             },
             child: const Text("Registrarse tu usuario"),
           ),
