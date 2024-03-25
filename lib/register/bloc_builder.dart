@@ -1,6 +1,10 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto_progra_movil/login.dart';
+import 'package:proyecto_progra_movil/register/register_cubit.dart';
+import 'package:proyecto_progra_movil/register/register_state.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -42,6 +46,9 @@ class _RegisterState extends State<RegisterScreen> {
         icon: Icon(Icons.person),
         labelText: textHint,
       ),
+      validator: (String? value) {
+        return (!value!.isEmpty) ? "Llene el nombre de usuario" : null;
+      },
     );
   }
 
@@ -68,14 +75,16 @@ class _RegisterState extends State<RegisterScreen> {
         labelText: textHint,
       ),
       obscureText: true,
+      validator: (String? value) {
+        return (!value!.isEmpty) ? "Ingrese una contraseña" : null;
+      },
     );
   }
 
-  Card _buildCardForms() {
-    final _formKey = GlobalKey<FormState>();
+  Card _buildCardForms(formKey) {
     return Card(
       child: Form(
-        key: _formKey,
+        key: formKey,
         child: Column(children: <TextFormField>[
           mailValidation("Correo *"),
           userValidation("Nombre de Usuario *"),
@@ -88,13 +97,43 @@ class _RegisterState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+
+    void _navigate(BuildContext context, Widget page) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => page,
+        ),
+      );
+    }
+
     return Container(
       decoration: _buildBackgroundDecoration(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildHeaderText(),
-          const SizedBox(height: 20.0),
+          BlocBuilder<RegisterCubit, RegisterState>(builder: (context, state) {
+            if (state is RegisterWaiting) {
+              return _buildCardForms(_formKey);
+            } else if (state is RegisterSuccesful) {
+              // _navigate(context, LoginScreen());
+              return const Text("REGISTRO EXITOSO");
+            } else {
+              _userController.clear();
+              _emailController.clear();
+              _passwordController.clear();
+              _password2Controller.clear();
+              return _buildCardForms(_formKey);
+            }
+          }),
+          ElevatedButton(
+            onPressed: () {
+              context.read<RegisterCubit>().validateRegisterData(_formKey,
+                  _passwordController.value, _password2Controller.value);
+            },
+            child: const Text("Registrarse tu usuario"),
+          ),
         ],
       ),
     );
