@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_progra_movil/register.dart';
+import 'package:proyecto_progra_movil/register/bloc_builder.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -93,7 +93,8 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const Register()),
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterScreen()),
                       );
                     },
                     child: const Text('Eres nuevo? regístrate'),
