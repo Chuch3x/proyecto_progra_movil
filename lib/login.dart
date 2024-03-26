@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_progra_movil/register/bloc_builder.dart';
+import 'package:proyecto_progra_movil/register/bloc_provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -38,13 +39,13 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Container(
                     alignment: Alignment
-                        .center, // Alinea el contenido al centro del contenedor
+                        .center, 
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(97, 89, 206, 143),
                     ),
                     child: const FittedBox(
                       fit: BoxFit
-                          .cover, // Hace que el texto ocupe todo el espacio disponible
+                          .cover, 
                       child: Text(
                         'Login',
                         style: TextStyle(
@@ -94,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const RegisterScreen()),
+                            builder: (context) => const RegisterProvider()),
                       );
                     },
                     child: const Text('Eres nuevo? regístrate'),
