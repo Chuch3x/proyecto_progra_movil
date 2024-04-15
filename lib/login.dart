@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/register/bloc_builder.dart';
+import 'package:proyecto_progra_movil/register/bloc_provider.dart';
+import 'package:proyecto_progra_movil/register/register_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({Key? key}) : super(key: key);
+
+  final FireBaseAuthService _auth = FireBaseAuthService();
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +45,12 @@ class LoginScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    alignment: Alignment
-                        .center, // Alinea el contenido al centro del contenedor
+                    alignment: Alignment.center,
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(97, 89, 206, 143),
                     ),
                     child: const FittedBox(
-                      fit: BoxFit
-                          .cover, // Hace que el texto ocupe todo el espacio disponible
+                      fit: BoxFit.cover,
                       child: Text(
                         'Login',
                         style: TextStyle(
@@ -63,30 +69,39 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16.0),
-                  const TextField(
+                  TextFormField(
+                    controller: _userController,
                     decoration: InputDecoration(
                       labelText: 'Usuario',
                     ),
                   ),
                   const SizedBox(height: 16.0),
-                  const TextField(
+                  TextFormField(
+                    controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      labelText: 'Contaseña',
+                      labelText: 'Contraseña',
                     ),
                   ),
                   const SizedBox(height: 24.0),
                   ElevatedButton(
                     onPressed: () {
-                      // Acción de inicio de sesión
+                      _auth
+                          .signInWithEmailAndPassword(
+                              _userController.text, _passwordController.text)
+                          .then((user) {
+                        if (user != null) {
+                          print("hola");
+                        } else {
+                          print("error");
+                        }
+                      });
                     },
                     child: const Text('Log in'),
                   ),
                   const SizedBox(height: 16.0),
                   TextButton(
-                    onPressed: () {
-                      // Acción de olvidar contraseña
-                    },
+                    onPressed: () {},
                     child: const Text('Forgot Password?'),
                   ),
                   TextButton(
@@ -94,10 +109,10 @@ class LoginScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const RegisterScreen()),
+                            builder: (context) => RegisterProvider()),
                       );
                     },
-                    child: const Text('Eres nuevo? regístrate'),
+                    child: const Text('És novo? Registra-te'),
                   ),
                 ],
               ),

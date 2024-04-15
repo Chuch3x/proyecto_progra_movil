@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () =>
-                            _navigate(context, const LoginScreen()),
+                            _navigate(context,  LoginScreen()),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromRGBO(89, 206, 143, 1),

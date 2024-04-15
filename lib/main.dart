@@ -1,10 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto_progra_movil/home-page.dart';
 
 //custom MENU icon
 const IconData menu = IconData(0xe3dc, fontFamily: 'MaterialIcons');
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+            apiKey: "AIzaSyCp2H-wqVIhA3QvOMiavui9TDy4MAaI8zE",
+            appId: "1:732543311140:web:65e0b19a89a0c12fe627b1",
+            messagingSenderId: "732543311140",
+            projectId: "flutter-firebase-project-b39c6"));
+  }
   runApp(const MyApp());
 }
 
