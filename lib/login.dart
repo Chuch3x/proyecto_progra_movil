@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 16.0),
                   TextButton(
                     onPressed: () {},
-                    child: const Text('Forgot Password?'),
+                    child: const Text('Olvidaste tu contraseña'),
                   ),
                   TextButton(
                     onPressed: () {
@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                             builder: (context) => RegisterProvider()),
                       );
                     },
-                    child: const Text('És novo? Registra-te'),
+                    child: const Text('Eres nuevo registrate'),
                   ),
                 ],
               ),
