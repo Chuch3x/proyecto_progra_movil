@@ -43,7 +43,7 @@ class _RegisterState extends State<RegisterScreen> {
     return TextFormField(
       controller: _userController,
       decoration: InputDecoration(
-        icon: Icon(Icons.person),
+        icon: const Icon(Icons.person),
         labelText: textHint,
       ),
       validator: (String? value) {
@@ -56,7 +56,7 @@ class _RegisterState extends State<RegisterScreen> {
     return TextFormField(
       controller: _emailController,
       decoration: InputDecoration(
-        icon: Icon(Icons.mail),
+        icon: const Icon(Icons.mail),
         labelText: textHint,
       ),
       validator: (String? value) {
@@ -71,7 +71,7 @@ class _RegisterState extends State<RegisterScreen> {
     return TextFormField(
       controller: type == 0 ? _passwordController : _password2Controller,
       decoration: InputDecoration(
-        icon: Icon(Icons.lock),
+        icon: const Icon(Icons.lock),
         labelText: textHint,
       ),
       obscureText: true,
