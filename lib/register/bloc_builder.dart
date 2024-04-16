@@ -13,7 +13,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterState extends State<RegisterScreen> {
-  final FireBaseAuthService _auth = FireBaseAuthService();
+  final FireBaseAuthService auth = FireBaseAuthService();
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -133,10 +133,11 @@ class _RegisterState extends State<RegisterScreen> {
             onPressed: () {
               final FormState form = _formKey.currentState!;
               if (form.validate()) {
-                //Ejemplo firebase
-                _auth.signUpWithEmailAndPassword(_userController.text, _passwordController.text);          
-                      context.read<RegisterCubit>().passwordValidation(
-                    _passwordController.text, _password2Controller.text);
+                context.read<RegisterCubit>().passwordValidation(
+                    _passwordController,
+                    _password2Controller,
+                    auth,
+                    _emailController);
               }
             },
             child: const Text("Registrarse tu usuario"),

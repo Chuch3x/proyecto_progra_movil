@@ -110,11 +110,12 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
               if (state is LoginWaiting) {
                 return Column(
                   children: [
-                    LoginOnWait(state.userController, state.passwordController),
+                    LoginOnWait(
+                        state.emailController, state.passwordController),
                     ElevatedButton(
                       onPressed: () {
                         context.read<LoginCubit>().validateInfoFirebase(auth,
-                            state.userController, state.passwordController);
+                            state.emailController, state.passwordController);
                       },
                       child: const Text('Log in'),
                     ),
@@ -134,7 +135,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                 return AlertDialog(
                   title: const Text("Login Exitoso"),
                   content: Text(
-                      "Bienvenido a Ruta Gourmet ${state.userController.text}"),
+                      "Bienvenido a Ruta Gourmet ${state.emailController.text}"),
                   actions: [
                     okButton,
                   ],

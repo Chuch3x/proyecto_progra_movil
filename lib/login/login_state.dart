@@ -5,23 +5,23 @@ class LoginState {
 }
 
 class LoginWaiting extends LoginState {
-  dynamic userController = TextEditingController();
+  dynamic emailController = TextEditingController();
   dynamic passwordController = TextEditingController();
 
-  LoginWaiting({required this.passwordController, this.userController});
+  LoginWaiting({required this.passwordController, this.emailController});
 
   @override
-  List<Object> get props => [userController, passwordController];
+  List<Object> get props => [emailController, passwordController];
 }
 
 class LoginSuccesful extends LoginState {
-  dynamic userController = TextEditingController();
+  dynamic emailController = TextEditingController();
   dynamic passwordController = TextEditingController();
 
-  LoginSuccesful({required this.passwordController, this.userController});
+  LoginSuccesful({required this.passwordController, this.emailController});
 
   @override
-  List<Object> get props => [userController, passwordController];
+  List<Object> get props => [emailController, passwordController];
 }
 
 class LoginFailed extends LoginState {}

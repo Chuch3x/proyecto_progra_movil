@@ -3,7 +3,7 @@ import 'package:proyecto_progra_movil/login/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit()
-      : super(LoginWaiting(userController: "", passwordController: "")) {}
+      : super(LoginWaiting(emailController: "", passwordController: "")) {}
 
   void validateInfoFirebase(auth, userController, passwordController) {
     auth
@@ -14,7 +14,7 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginFailed());
       } else {
         emit(LoginSuccesful(
-            userController: userController,
+            emailController: userController,
             passwordController: passwordController));
       }
     });

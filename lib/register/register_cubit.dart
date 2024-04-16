@@ -5,12 +5,16 @@ import 'package:proyecto_progra_movil/register/register_state.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterWaiting());
 
-  void passwordValidation(pass, passValidation) {
-    if (pass == passValidation) {
-      emit(RegisterSuccesful());
+  void passwordValidation(pass, passValidation, auth, emailController) {
+    if (pass.text == passValidation.text) {
+      signUpUserFire(auth, emailController, pass);
     } else {
       emit(RegisterFailure());
     }
+  } //Not useful anymore
+
+  void signUpUserFire(auth, emailController, passwordController) {
+    auth.signUpWithEmailAndPassword(
+        emailController.text, passwordController.text);
   }
-  //Negocios logic
 }
