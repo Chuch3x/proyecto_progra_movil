@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/login/login_cubit.dart';
 import 'package:proyecto_progra_movil/login/login_state.dart';
+import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
 import 'package:proyecto_progra_movil/register/bloc_provider.dart';
 
 class LoginScreenNew extends StatefulWidget {
@@ -66,11 +67,6 @@ Widget LoginOnWait(userController, passwordController) {
   );
 }
 
-Widget okButton = TextButton(
-  child: const Text("OK"),
-  onPressed: () {},
-);
-
 class _LoginScreenNewState extends State<LoginScreenNew> {
   final FireBaseAuthService auth = FireBaseAuthService();
 
@@ -85,6 +81,13 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
         );
       });
     }
+
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        navigate(context, PreferencesPage());
+      },
+    );
 
     return Container(
       decoration: const BoxDecoration(
