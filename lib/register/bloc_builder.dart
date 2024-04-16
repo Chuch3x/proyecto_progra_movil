@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/login.dart';
+import 'package:proyecto_progra_movil/login/login_builder.dart';
+import 'package:proyecto_progra_movil/login/login_provider.dart';
 import 'package:proyecto_progra_movil/register/register_cubit.dart';
 import 'package:proyecto_progra_movil/register/register_state.dart';
 
@@ -119,7 +121,7 @@ class _RegisterState extends State<RegisterScreen> {
             if (state is RegisterWaiting) {
               return _buildCardForms(_formKey);
             } else if (state is RegisterSuccesful) {
-              _navigate(context, LoginScreen());
+              _navigate(context, const LoginProvider());
               return const Text("REGISTRO EXITOSO");
             } else {
               _userController.clear();
