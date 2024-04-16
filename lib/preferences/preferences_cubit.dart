@@ -1,30 +1,16 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// Eventos
-abstract class PreferencesEvent {}
+class PreferencesCubit extends Cubit<List<String>> {
+  PreferencesCubit() : super([]);
 
-class SelectPreference extends PreferencesEvent {
-  final String preference;
-
-  SelectPreference(this.preference);
-}
-
-// Estado
-class PreferencesState {
-  final List<String> selectedPreferences;
-
-  PreferencesState(this.selectedPreferences);
-}
-
-// Cubit
-class PreferencesCubit extends Cubit<PreferencesState> {
-  PreferencesCubit() : super(PreferencesState([]));
-
-  void selectPreference(String preference) {
-    final List<String> updatedPreferences = List.from(state.selectedPreferences);
-    if (!updatedPreferences.contains(preference)) {
-      updatedPreferences.add(preference);
-      emit(PreferencesState(updatedPreferences));
+  void togglePreference(String preference) {
+    if (state.contains(preference)) {
+      // Si la preferencia ya está seleccionada, la eliminamos de la lista
+      emit(List.from(state)..remove(preference));
+    } else {
+      // Si la preferencia no está seleccionada, la agregamos a la lista
+      emit(List.from(state)..add(preference));
     }
   }
 }
+
