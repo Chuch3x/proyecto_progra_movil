@@ -14,11 +14,11 @@ class LoginCubit extends Cubit<LoginState> {
             userController.text, passwordController.text)
         .then((user) {
       if (user != null) {
-        emit(LoginFailed());
-      } else {
         emit(LoginSuccesful(
             emailController: userController,
             passwordController: passwordController));
+      } else {
+        emit(LoginFailed());
       }
     });
   }

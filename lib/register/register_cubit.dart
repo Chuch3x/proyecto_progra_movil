@@ -12,7 +12,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     } else {
       emit(RegisterFailure());
     }
-  } //Not useful anymore
+  }
 
   void signUpUserFire(auth, emailController, passwordController) async {
     try {
