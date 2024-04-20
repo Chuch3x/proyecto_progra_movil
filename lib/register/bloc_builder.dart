@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/login.dart';
+import 'package:proyecto_progra_movil/login/login_builder.dart';
+import 'package:proyecto_progra_movil/login/login_provider.dart';
 import 'package:proyecto_progra_movil/register/register_cubit.dart';
 import 'package:proyecto_progra_movil/register/register_state.dart';
 
@@ -13,7 +15,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterState extends State<RegisterScreen> {
-  final FireBaseAuthService _auth = FireBaseAuthService();
+  final FireBaseAuthService auth = FireBaseAuthService();
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -119,7 +121,7 @@ class _RegisterState extends State<RegisterScreen> {
             if (state is RegisterWaiting) {
               return _buildCardForms(_formKey);
             } else if (state is RegisterSuccesful) {
-              _navigate(context, LoginScreen());
+              _navigate(context, const LoginProvider());
               return const Text("REGISTRO EXITOSO");
             } else {
               _userController.clear();
@@ -133,10 +135,11 @@ class _RegisterState extends State<RegisterScreen> {
             onPressed: () {
               final FormState form = _formKey.currentState!;
               if (form.validate()) {
-                //Ejemplo firebase
-                _auth.signUpWithEmailAndPassword(_userController.text, _passwordController.text);          
-                      context.read<RegisterCubit>().passwordValidation(
-                    _passwordController.text, _password2Controller.text);
+                context.read<RegisterCubit>().passwordValidation(
+                    _passwordController,
+                    _password2Controller,
+                    auth,
+                    _emailController);
               }
             },
             child: const Text("Registrarse tu usuario"),

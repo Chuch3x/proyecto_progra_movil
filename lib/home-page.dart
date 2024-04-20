@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_progra_movil/login.dart';
+import 'package:proyecto_progra_movil/login/login_builder.dart';
+import 'package:proyecto_progra_movil/login/login_provider.dart';
 import 'package:proyecto_progra_movil/register/bloc_builder.dart';
 import 'package:proyecto_progra_movil/register/bloc_provider.dart';
 
@@ -59,7 +61,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () =>
-                            _navigate(context,  LoginScreen()),
+                            _navigate(context, const LoginProvider()),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromRGBO(89, 206, 143, 1),

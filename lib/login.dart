@@ -5,11 +5,18 @@ import 'package:proyecto_progra_movil/register/bloc_builder.dart';
 import 'package:proyecto_progra_movil/register/bloc_provider.dart';
 import 'package:proyecto_progra_movil/register/register_cubit.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final FireBaseAuthService _auth = FireBaseAuthService();
+
   final TextEditingController _userController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
   @override
