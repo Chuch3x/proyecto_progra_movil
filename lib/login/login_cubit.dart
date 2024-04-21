@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:proyecto_progra_movil/login/login_state.dart';
+import 'package:proyecto_progra_movil/login/repository/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit()

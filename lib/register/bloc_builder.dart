@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/login.dart';
-import 'package:proyecto_progra_movil/login/login_builder.dart';
+import 'package:proyecto_progra_movil/login/repository/login_builder.dart';
 import 'package:proyecto_progra_movil/login/login_provider.dart';
 import 'package:proyecto_progra_movil/register/register_cubit.dart';
 import 'package:proyecto_progra_movil/register/register_state.dart';
