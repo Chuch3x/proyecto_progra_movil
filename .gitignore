@@ -60,5 +60,5 @@ app.*.map.json
 **/linux/flutter/generated_plugins.cmake
 
 pubspec.lock
-pubspec.yaml
+
 
