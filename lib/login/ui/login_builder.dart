@@ -1,11 +1,15 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
-import 'package:proyecto_progra_movil/login/login_cubit.dart';
-import 'package:proyecto_progra_movil/login/login_state.dart';
+import 'package:proyecto_progra_movil/login/bloc/login_bloc.dart';
+import 'package:proyecto_progra_movil/login/bloc/login_event.dart';
+import 'package:proyecto_progra_movil/login/bloc/login_state.dart';
 import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
-import 'package:proyecto_progra_movil/register/bloc_provider.dart';
+import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
 
 class LoginScreenNew extends StatefulWidget {
   const LoginScreenNew({super.key});
@@ -14,7 +18,7 @@ class LoginScreenNew extends StatefulWidget {
   State<LoginScreenNew> createState() => _LoginScreenNewState();
 }
 
-Widget LoginOnWait(userController, passwordController) {
+Widget LoginOnWait(emailController, passwordController) {
   return Card(
     elevation: 8.0,
     shape: RoundedRectangleBorder(
@@ -49,7 +53,7 @@ Widget LoginOnWait(userController, passwordController) {
             ),
           ),
           TextFormField(
-            controller: userController,
+            controller: emailController,
             decoration: const InputDecoration(
               labelText: 'Usuario',
             ),
@@ -68,28 +72,20 @@ Widget LoginOnWait(userController, passwordController) {
 }
 
 class _LoginScreenNewState extends State<LoginScreenNew> {
-  final FireBaseAuthService auth = FireBaseAuthService();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    void navigate(BuildContext context, Widget page) {
-      Future.delayed(const Duration(milliseconds: 800), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => page,
-          ),
-        );
-      });
-    }
-
     Widget okButton = TextButton(
       child: const Text("OK"),
       onPressed: () {
-        navigate(context, PreferencesPage());
+        context.go("/preferences");
       },
     );
 
-    return Container(
+    return Scaffold(
+        body: Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/silpancho-background-homepage.jpg'),
@@ -108,17 +104,20 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
               color: Colors.white,
             ),
           ),
-          BlocBuilder<LoginCubit, LoginState>(
+          BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
               if (state is LoginWaiting) {
                 return Column(
                   children: [
-                    LoginOnWait(
-                        state.emailController, state.passwordController),
+                    LoginOnWait(_emailController, _passwordController),
                     ElevatedButton(
                       onPressed: () {
-                        context.read<LoginCubit>().validateInfoFirebase(auth,
-                            state.emailController, state.passwordController);
+                        String username = _emailController.text.toString();
+                        String password = _passwordController.text.toString();
+                        if (username.isNotEmpty && password.isNotEmpty) {
+                          context.read<LoginBloc>().add(
+                              LoginInput(email: username, password: password));
+                        }
                       },
                       child: const Text('Log in'),
                     ),
@@ -128,7 +127,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                     ),
                     TextButton(
                       onPressed: () {
-                        navigate(context, RegisterProvider());
+                        context.go("/register");
                       },
                       child: const Text('Eres nuevo registrate'),
                     ),
@@ -137,8 +136,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
               } else if (state is LoginSuccesful) {
                 return AlertDialog(
                   title: const Text("Login Exitoso"),
-                  content: Text(
-                      "Bienvenido a Ruta Gourmet ${state.emailController.text}"),
+                  content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
                   actions: [
                     okButton,
                   ],
@@ -158,6 +156,6 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
           ),
         ],
       ),
-    );
+    ));
   }
 }

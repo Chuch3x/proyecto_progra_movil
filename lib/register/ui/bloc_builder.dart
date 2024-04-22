@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
-import 'package:proyecto_progra_movil/login.dart';
-import 'package:proyecto_progra_movil/login/login_builder.dart';
-import 'package:proyecto_progra_movil/login/login_provider.dart';
-import 'package:proyecto_progra_movil/register/register_cubit.dart';
-import 'package:proyecto_progra_movil/register/register_state.dart';
+import 'package:proyecto_progra_movil/login/ui/login_builder.dart';
+import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
+import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
+import 'package:proyecto_progra_movil/register/bloc/register_event.dart';
+import 'package:proyecto_progra_movil/register/bloc/register_state.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -101,27 +102,17 @@ class _RegisterState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
-    void _navigate(BuildContext context, Widget page) {
-      Future.delayed(Duration(milliseconds: 800), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => page,
-          ),
-        );
-      });
-    }
-
     return Container(
       decoration: _buildBackgroundDecoration(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildHeaderText(),
-          BlocBuilder<RegisterCubit, RegisterState>(builder: (context, state) {
+          BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
             if (state is RegisterWaiting) {
               return _buildCardForms(_formKey);
             } else if (state is RegisterSuccesful) {
-              _navigate(context, const LoginProvider());
+              context.go("/login");
               return const Text("REGISTRO EXITOSO");
             } else {
               _userController.clear();
@@ -135,11 +126,14 @@ class _RegisterState extends State<RegisterScreen> {
             onPressed: () {
               final FormState form = _formKey.currentState!;
               if (form.validate()) {
-                context.read<RegisterCubit>().passwordValidation(
-                    _passwordController,
-                    _password2Controller,
-                    auth,
-                    _emailController);
+                String password = _passwordController.text.toString();
+                String email = _userController.text.toString();
+                String passwordValidation =
+                    _password2Controller.text.toString();
+                context.read<RegisterBloc>().add(RegisterSave(
+                    email: email,
+                    password: password,
+                    passwordValidation: passwordValidation));
               }
             },
             child: const Text("Registrarse tu usuario"),

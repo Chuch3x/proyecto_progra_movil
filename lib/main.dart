@@ -1,23 +1,64 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/home-page.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
+import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
+import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
 
 //custom MENU icon
 const IconData menu = IconData(0xe3dc, fontFamily: 'MaterialIcons');
 
 Future main() async {
+  await dotenv.load(fileName: "env");
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: "AIzaSyCp2H-wqVIhA3QvOMiavui9TDy4MAaI8zE",
-            appId: "1:732543311140:web:65e0b19a89a0c12fe627b1",
-            messagingSenderId: "732543311140",
-            projectId: "flutter-firebase-project-b39c6"));
-  }
+
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: dotenv.env['API_KEY']!,
+      authDomain: dotenv.env['AUTH_DOMAIN']!,
+      projectId: dotenv.env['PROJECT_ID']!,
+      storageBucket: dotenv.env['STORAGE_BUCKET']!,
+      messagingSenderId: dotenv.env['MESSAGING_SENDER_ID']!,
+      appId: dotenv.env['APP_ID']!,
+    ),
+  );
+
   runApp(const MyApp());
 }
+
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const HomePage();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'register',
+          builder: (BuildContext context, GoRouterState state) {
+            return const RegisterProvider();
+          },
+        ),
+        GoRoute(
+          path: 'login',
+          builder: (BuildContext context, GoRouterState state) {
+            return const LoginProvider();
+          },
+        ),
+        GoRoute(
+          path: 'preferences',
+          builder: (BuildContext context, GoRouterState state) {
+            return const PreferencesPage();
+          },
+        ),
+      ],
+    ),
+  ],
+);
 
 ThemeData defaultTheme = ThemeData(
     // fontFamily: 'Pangolin',
@@ -42,10 +83,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: defaultTheme,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routerConfig: _router,
     );
   }
 }

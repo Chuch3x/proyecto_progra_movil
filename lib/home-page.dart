@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_progra_movil/login.dart';
-import 'package:proyecto_progra_movil/login/login_builder.dart';
-import 'package:proyecto_progra_movil/login/login_provider.dart';
-import 'package:proyecto_progra_movil/register/bloc_builder.dart';
-import 'package:proyecto_progra_movil/register/bloc_provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:proyecto_progra_movil/login/ui/login_builder.dart';
+import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
+import 'package:proyecto_progra_movil/register/ui/bloc_builder.dart';
+import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void _navigate(BuildContext context, Widget page) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => page,
-        ),
-      );
-    }
-
+    RouterConfig routerConfig;
     return Scaffold(
       body: Stack(
         children: [
@@ -60,8 +53,7 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () =>
-                            _navigate(context, const LoginProvider()),
+                        onPressed: () => context.go("/login"),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromRGBO(89, 206, 143, 1),
@@ -78,8 +70,7 @@ class HomePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () =>
-                            _navigate(context, const RegisterProvider()),
+                        onPressed: () => context.go("/register"),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromRGBO(89, 206, 143, 1),

@@ -1,0 +1,19 @@
+import 'package:proyecto_progra_movil/login/data_source/login_source.dart';
+
+class LoginRepo {
+  DataSource loginDataSource;
+
+  LoginRepo({required this.loginDataSource});
+
+  bool authenticateData(username, password) {
+    try {
+      final response = loginDataSource.authenticateUser(username, password);
+      if (response != null) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw Exception('Failed to authenticate user data: $e');
+    }
+  }
+}
