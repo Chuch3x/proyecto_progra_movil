@@ -8,7 +8,7 @@ import 'package:proyecto_progra_movil/login/bloc/login_bloc.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_event.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_state.dart';
 import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
-import 'package:proyecto_progra_movil/register/bloc_provider.dart';
+import 'package:proyecto_progra_movil/register/bloc/bloc_provider.dart';
 
 class LoginScreenNew extends StatefulWidget {
   const LoginScreenNew({super.key});

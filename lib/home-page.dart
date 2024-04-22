@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_builder.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_provider.dart';
-import 'package:proyecto_progra_movil/register/bloc_builder.dart';
-import 'package:proyecto_progra_movil/register/bloc_provider.dart';
+import 'package:proyecto_progra_movil/register/bloc/bloc_builder.dart';
+import 'package:proyecto_progra_movil/register/bloc/bloc_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

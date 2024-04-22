@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_builder.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_provider.dart';
-import 'package:proyecto_progra_movil/register/register_cubit.dart';
-import 'package:proyecto_progra_movil/register/register_state.dart';
+import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
+import 'package:proyecto_progra_movil/register/bloc/register_event.dart';
+import 'package:proyecto_progra_movil/register/bloc/register_state.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -101,7 +102,7 @@ class _RegisterState extends State<RegisterScreen> {
     final _formKey = GlobalKey<FormState>();
 
     void _navigate(BuildContext context, Widget page) {
-      Future.delayed(Duration(milliseconds: 800), () {
+      Future.delayed(const Duration(milliseconds: 800), () {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => page,
@@ -116,7 +117,7 @@ class _RegisterState extends State<RegisterScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildHeaderText(),
-          BlocBuilder<RegisterCubit, RegisterState>(builder: (context, state) {
+          BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
             if (state is RegisterWaiting) {
               return _buildCardForms(_formKey);
             } else if (state is RegisterSuccesful) {
@@ -134,10 +135,14 @@ class _RegisterState extends State<RegisterScreen> {
             onPressed: () {
               final FormState form = _formKey.currentState!;
               if (form.validate()) {
-                context.read<RegisterCubit>().passwordValidation(
-                    _passwordController,
-                    _password2Controller,
-                    _emailController);
+                String password = _passwordController.text.toString();
+                String email = _userController.text.toString();
+                String passwordValidation =
+                    _password2Controller.text.toString();
+                context.read<RegisterBloc>().add(RegisterSave(
+                    email: email,
+                    password: password,
+                    passwordValidation: passwordValidation));
               }
             },
             child: const Text("Registrarse tu usuario"),
