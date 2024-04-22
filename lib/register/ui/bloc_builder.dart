@@ -21,6 +21,8 @@ class _RegisterState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _password2Controller = TextEditingController();
+  final TextEditingController _streetController = TextEditingController();
+  final TextEditingController _descripcionController = TextEditingController();
   BoxDecoration _buildBackgroundDecoration() {
     return const BoxDecoration(
       image: DecorationImage(
@@ -42,15 +44,16 @@ class _RegisterState extends State<RegisterScreen> {
     );
   }
 
-  TextFormField userValidation(final String textHint) {
+  TextFormField textValidation(
+      String textHint, TextEditingController controllerType) {
     return TextFormField(
-      controller: _userController,
+      controller: controllerType,
       decoration: InputDecoration(
-        icon: const Icon(Icons.person),
+        icon: const Icon(Icons.text_fields),
         labelText: textHint,
       ),
       validator: (String? value) {
-        return (value!.isEmpty) ? "Llene el nombre de usuario" : null;
+        return (value!.isEmpty) ? "Complete el punto" : null;
       },
     );
   }
@@ -90,9 +93,26 @@ class _RegisterState extends State<RegisterScreen> {
         key: formKey,
         child: Column(children: <TextFormField>[
           mailValidation("Correo *"),
-          userValidation("Nombre de Usuario *"),
+          textValidation("Nombre de Usuario *", _userController),
           passwordValidation("Contraseña *", 0),
           passwordValidation("Repita la contraseña *", 1),
+        ]),
+      ),
+    );
+  }
+
+  Card _buildRestaurantCard(formKey) {
+    return Card(
+      child: Form(
+        key: formKey,
+        child: Column(children: <TextFormField>[
+          mailValidation("Correo *"),
+          textValidation("Nombre del restaurante *", _userController),
+          passwordValidation("Contraseña *", 0),
+          passwordValidation("Repita la contraseña *", 1),
+          textValidation("Calle del restaurante *", _streetController),
+          textValidation(
+              "Descripcion del restaurante *", _descripcionController),
         ]),
       ),
     );
@@ -110,7 +130,56 @@ class _RegisterState extends State<RegisterScreen> {
           _buildHeaderText(),
           BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
             if (state is RegisterWaiting) {
-              return _buildCardForms(_formKey);
+              return Column(
+                children: [
+                  _buildCardForms(_formKey),
+                  ElevatedButton(
+                    onPressed: () {
+                      final FormState form = _formKey.currentState!;
+                      if (form.validate()) {
+                        String password = _passwordController.text.toString();
+                        String email = _userController.text.toString();
+                        String passwordValidation =
+                            _password2Controller.text.toString();
+                        context.read<RegisterBloc>().add(RegisterSave(
+                            email: email,
+                            password: password,
+                            passwordValidation: passwordValidation));
+                      }
+                    },
+                    child: const Text("Registrarse tu usuario"),
+                  ),
+                ],
+              );
+            } else if (state is RegisterWaitingRestaurant) {
+              return Column(
+                children: [
+                  _buildRestaurantCard(_formKey),
+                  ElevatedButton(
+                    onPressed: () {
+                      final FormState form = _formKey.currentState!;
+                      if (form.validate()) {
+                        String password = _passwordController.text.toString();
+                        String email = _emailController.text.toString();
+                        String user = _userController.text.toString();
+                        String location = _streetController.text.toString();
+                        String description =
+                            _descripcionController.text.toString();
+                        String passwordValidation =
+                            _password2Controller.text.toString();
+                        context.read<RegisterBloc>().add(RegisterRestaurant(
+                            email: email,
+                            password: password,
+                            passwordValidation: passwordValidation,
+                            restaurantName: user,
+                            description: description,
+                            streetName: location));
+                      }
+                    },
+                    child: const Text("Registra tu restaurante"),
+                  ),
+                ],
+              );
             } else if (state is RegisterSuccesful) {
               context.go("/login");
               return const Text("REGISTRO EXITOSO");
@@ -122,21 +191,11 @@ class _RegisterState extends State<RegisterScreen> {
               return _buildCardForms(_formKey);
             }
           }),
-          ElevatedButton(
+          TextButton(
             onPressed: () {
-              final FormState form = _formKey.currentState!;
-              if (form.validate()) {
-                String password = _passwordController.text.toString();
-                String email = _userController.text.toString();
-                String passwordValidation =
-                    _password2Controller.text.toString();
-                context.read<RegisterBloc>().add(RegisterSave(
-                    email: email,
-                    password: password,
-                    passwordValidation: passwordValidation));
-              }
+              context.read<RegisterBloc>().add(RegisterChange());
             },
-            child: const Text("Registrarse tu usuario"),
+            child: const Text('Registrate como restaurante'),
           ),
         ],
       ),

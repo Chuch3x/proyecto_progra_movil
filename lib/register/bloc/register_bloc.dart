@@ -20,5 +20,20 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         emit(RegisterFailure());
       }
     });
+    on<RegisterChange>((event, emit) => emit(RegisterWaitingRestaurant()));
+
+    on<RegisterRestaurant>((event, emit) async {
+      try {
+        final user = registerRepo.passwordValidation(
+            event.password, event.passwordValidation, event.email);
+        if (user != null) {
+          emit(RegisterSuccesful());
+        } else {
+          emit(RegisterFailure());
+        }
+      } catch (e) {
+        emit(RegisterFailure());
+      }
+    });
   }
 }
