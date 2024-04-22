@@ -5,9 +5,13 @@ class LoginRepo {
 
   LoginRepo({required this.loginDataSource});
 
-  authenticateData(username, password) {
+  bool authenticateData(username, password) {
     try {
-      return loginDataSource.authenticateUser(username, password);
+      final response = loginDataSource.authenticateUser(username, password);
+      if (response != null) {
+        return true;
+      }
+      return false;
     } catch (e) {
       throw Exception('Failed to authenticate user data: $e');
     }
