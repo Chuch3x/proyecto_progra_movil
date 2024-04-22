@@ -2,22 +2,26 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto_progra_movil/home-page.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //custom MENU icon
 const IconData menu = IconData(0xe3dc, fontFamily: 'MaterialIcons');
 
 Future main() async {
+  await dotenv.load(fileName: "env");
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: "AIzaSyCp2H-wqVIhA3QvOMiavui9TDy4MAaI8zE",
-            authDomain: "flutter-firebase-project-b39c6.firebaseapp.com",
-            projectId: "flutter-firebase-project-b39c6",
-            storageBucket: "flutter-firebase-project-b39c6.appspot.com",
-            messagingSenderId: "732543311140",
-            appId: "1:732543311140:web:65e0b19a89a0c12fe627b1"));
-  }
+
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: dotenv.env['API_KEY']!,
+      authDomain: dotenv.env['AUTH_DOMAIN']!,
+      projectId: dotenv.env['PROJECT_ID']!,
+      storageBucket: dotenv.env['STORAGE_BUCKET']!,
+      messagingSenderId: dotenv.env['MESSAGING_SENDER_ID']!,
+      appId: dotenv.env['APP_ID']!,
+    ),
+  );
+
   runApp(const MyApp());
 }
 
