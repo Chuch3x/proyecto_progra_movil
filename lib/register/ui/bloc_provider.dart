@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:proyecto_progra_movil/register/bloc/bloc_builder.dart';
+import 'package:proyecto_progra_movil/register/ui/bloc_builder.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
 import 'package:proyecto_progra_movil/register/data_source/register_data_source.dart';
 import 'package:proyecto_progra_movil/register/repository/register_repository.dart';

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/home-page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:proyecto_progra_movil/login/bloc/login_provider.dart';
+import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
 import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
-import 'package:proyecto_progra_movil/register/bloc/bloc_provider.dart';
+import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
 
 //custom MENU icon
 const IconData menu = IconData(0xe3dc, fontFamily: 'MaterialIcons');

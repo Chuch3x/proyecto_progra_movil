@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proyecto_progra_movil/login/bloc/login_builder.dart';
-import 'package:proyecto_progra_movil/login/bloc/login_provider.dart';
-import 'package:proyecto_progra_movil/register/bloc/bloc_builder.dart';
-import 'package:proyecto_progra_movil/register/bloc/bloc_provider.dart';
+import 'package:proyecto_progra_movil/login/ui/login_builder.dart';
+import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
+import 'package:proyecto_progra_movil/register/ui/bloc_builder.dart';
+import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
