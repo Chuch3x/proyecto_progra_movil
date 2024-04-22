@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_progra_movil/login.dart';
-import 'package:proyecto_progra_movil/login/repository/login_builder.dart';
-import 'package:proyecto_progra_movil/login/login_provider.dart';
+import 'package:proyecto_progra_movil/login/bloc/login_builder.dart';
+import 'package:proyecto_progra_movil/login/bloc/login_provider.dart';
 import 'package:proyecto_progra_movil/register/bloc_builder.dart';
 import 'package:proyecto_progra_movil/register/bloc_provider.dart';
 

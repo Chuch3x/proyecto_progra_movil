@@ -12,9 +12,11 @@ Future main() async {
     await Firebase.initializeApp(
         options: FirebaseOptions(
             apiKey: "AIzaSyCp2H-wqVIhA3QvOMiavui9TDy4MAaI8zE",
-            appId: "1:732543311140:web:65e0b19a89a0c12fe627b1",
+            authDomain: "flutter-firebase-project-b39c6.firebaseapp.com",
+            projectId: "flutter-firebase-project-b39c6",
+            storageBucket: "flutter-firebase-project-b39c6.appspot.com",
             messagingSenderId: "732543311140",
-            projectId: "flutter-firebase-project-b39c6"));
+            appId: "1:732543311140:web:65e0b19a89a0c12fe627b1"));
   }
   runApp(const MyApp());
 }
