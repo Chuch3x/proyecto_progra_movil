@@ -1,8 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/home-page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:proyecto_progra_movil/login/bloc/login_provider.dart';
+import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
+import 'package:proyecto_progra_movil/register/bloc/bloc_provider.dart';
 
 //custom MENU icon
 const IconData menu = IconData(0xe3dc, fontFamily: 'MaterialIcons');
@@ -24,6 +28,37 @@ Future main() async {
 
   runApp(const MyApp());
 }
+
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const HomePage();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'register',
+          builder: (BuildContext context, GoRouterState state) {
+            return const RegisterProvider();
+          },
+        ),
+        GoRoute(
+          path: 'login',
+          builder: (BuildContext context, GoRouterState state) {
+            return const LoginProvider();
+          },
+        ),
+        GoRoute(
+          path: 'preferences',
+          builder: (BuildContext context, GoRouterState state) {
+            return const PreferencesPage();
+          },
+        ),
+      ],
+    ),
+  ],
+);
 
 ThemeData defaultTheme = ThemeData(
     // fontFamily: 'Pangolin',
@@ -48,10 +83,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: defaultTheme,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routerConfig: _router,
     );
   }
 }

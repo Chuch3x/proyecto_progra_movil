@@ -3,6 +3,7 @@ import 'dart:js_interop';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_bloc.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_event.dart';
@@ -76,20 +77,10 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
 
   @override
   Widget build(BuildContext context) {
-    void navigate(BuildContext context, Widget page) {
-      Future.delayed(const Duration(milliseconds: 800), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => page,
-          ),
-        );
-      });
-    }
-
     Widget okButton = TextButton(
       child: const Text("OK"),
       onPressed: () {
-        // navigate(context, PreferencesPage());
+        context.go("/preferences");
       },
     );
 
@@ -135,7 +126,9 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                       child: const Text('Olvidaste tu contraseña'),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.go("/register");
+                      },
                       child: const Text('Eres nuevo registrate'),
                     ),
                   ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_builder.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_provider.dart';
@@ -101,16 +102,6 @@ class _RegisterState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
-    void _navigate(BuildContext context, Widget page) {
-      Future.delayed(const Duration(milliseconds: 800), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => page,
-          ),
-        );
-      });
-    }
-
     return Container(
       decoration: _buildBackgroundDecoration(),
       child: Column(
@@ -121,7 +112,7 @@ class _RegisterState extends State<RegisterScreen> {
             if (state is RegisterWaiting) {
               return _buildCardForms(_formKey);
             } else if (state is RegisterSuccesful) {
-              _navigate(context, const LoginProvider());
+              context.go("/login");
               return const Text("REGISTRO EXITOSO");
             } else {
               _userController.clear();
