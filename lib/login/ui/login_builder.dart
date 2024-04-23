@@ -1,15 +1,9 @@
-import 'dart:js_interop';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_bloc.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_event.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_state.dart';
-import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
-import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
 
 class LoginScreenNew extends StatefulWidget {
   const LoginScreenNew({super.key});

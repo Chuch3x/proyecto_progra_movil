@@ -7,9 +7,16 @@ class RegisterRepo {
   RegisterRepo({required this.dataSource});
 
   Future<User?> passwordValidation(
-      pass, passValidation, emailController) async {
+    String pass,
+    String passValidation,
+    String email,
+    String username, {
+    String street = "",
+    String description = "",
+  }) async {
     if (pass == passValidation) {
-      return dataSource.createUser(emailController, pass);
+      await dataSource.createUserAuth(email, pass);
+      await dataSource.saveUserDB(username, email, street, description);
     }
   }
 }

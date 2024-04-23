@@ -9,13 +9,27 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc({required this.registerRepo}) : super(RegisterWaiting()) {
     on<RegisterSave>((event, emit) async {
       try {
-        final user = registerRepo.passwordValidation(
-            event.password, event.passwordValidation, event.email);
-        if (user != null) {
-          emit(RegisterSuccesful());
-        } else {
-          emit(RegisterFailure());
-        }
+        await registerRepo.passwordValidation(event.password,
+            event.passwordValidation, event.email, event.username);
+        emit(RegisterSuccesful());
+      } catch (e) {
+        emit(RegisterFailure());
+      }
+    });
+    on<RegisterChange>((event, emit) {
+      if (event.type == 0) {
+        emit(RegisterWaiting());
+      } else {
+        emit(RegisterWaitingRestaurant());
+      }
+    });
+
+    on<RegisterRestaurant>((event, emit) async {
+      try {
+        await registerRepo.passwordValidation(event.password,
+            event.passwordValidation, event.email, event.restaurantName,
+            street: event.streetName, description: event.description);
+        emit(RegisterSuccesful());
       } catch (e) {
         emit(RegisterFailure());
       }

@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:proyecto_progra_movil/login/ui/login_builder.dart';
-import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
-import 'package:proyecto_progra_movil/register/ui/bloc_builder.dart';
-import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    RouterConfig routerConfig;
     return Scaffold(
       body: Stack(
         children: [
