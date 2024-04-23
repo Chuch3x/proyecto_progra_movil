@@ -138,13 +138,15 @@ class _RegisterState extends State<RegisterScreen> {
                       final FormState form = _formKey.currentState!;
                       if (form.validate()) {
                         String password = _passwordController.text.toString();
-                        String email = _userController.text.toString();
+                        String email = _emailController.text.toString();
                         String passwordValidation =
                             _password2Controller.text.toString();
+                        String username = _userController.text.toString();
                         context.read<RegisterBloc>().add(RegisterSave(
                             email: email,
                             password: password,
-                            passwordValidation: passwordValidation));
+                            passwordValidation: passwordValidation,
+                            username: username));
                       }
                     },
                     child: const Text("Registrarse tu usuario"),
@@ -188,6 +190,8 @@ class _RegisterState extends State<RegisterScreen> {
               _emailController.clear();
               _passwordController.clear();
               _password2Controller.clear();
+              _streetController.clear();
+              _descripcionController.clear();
               return _buildCardForms(_formKey);
             }
           }),
