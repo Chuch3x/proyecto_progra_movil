@@ -16,7 +16,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         emit(RegisterFailure());
       }
     });
-    on<RegisterChange>((event, emit) => emit(RegisterWaitingRestaurant()));
+    on<RegisterChange>((event, emit) {
+      if (event.type == 0) {
+        emit(RegisterWaiting());
+      } else {
+        emit(RegisterWaitingRestaurant());
+      }
+    });
 
     on<RegisterRestaurant>((event, emit) async {
       try {

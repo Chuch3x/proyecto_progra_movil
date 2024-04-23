@@ -18,7 +18,12 @@ class RegisterSave extends RegisterEvent {
   List<Object> get props => [email, password, passwordValidation, username];
 }
 
-class RegisterChange extends RegisterEvent {}
+class RegisterChange extends RegisterEvent {
+  final int type;
+  RegisterChange({required this.type});
+  @override
+  List<Object> get props => [type];
+}
 
 class RegisterRestaurant extends RegisterEvent {
   final String email;

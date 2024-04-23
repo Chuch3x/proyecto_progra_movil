@@ -151,6 +151,12 @@ class _RegisterState extends State<RegisterScreen> {
                     },
                     child: const Text("Registrarse tu usuario"),
                   ),
+                  TextButton(
+                    onPressed: () {
+                      context.read<RegisterBloc>().add(RegisterChange(type: 1));
+                    },
+                    child: const Text('Registrate como restaurante'),
+                  ),
                 ],
               );
             } else if (state is RegisterWaitingRestaurant) {
@@ -180,6 +186,12 @@ class _RegisterState extends State<RegisterScreen> {
                     },
                     child: const Text("Registra tu restaurante"),
                   ),
+                  TextButton(
+                    onPressed: () {
+                      context.read<RegisterBloc>().add(RegisterChange(type: 0));
+                    },
+                    child: const Text('Registrate como usuario'),
+                  ),
                 ],
               );
             } else if (state is RegisterSuccesful) {
@@ -195,12 +207,6 @@ class _RegisterState extends State<RegisterScreen> {
               return _buildCardForms(_formKey);
             }
           }),
-          TextButton(
-            onPressed: () {
-              context.read<RegisterBloc>().add(RegisterChange());
-            },
-            child: const Text('Registrate como restaurante'),
-          ),
         ],
       ),
     );
