@@ -17,8 +17,11 @@ class FireStore {
   Future<void> uploadRestaurant(
       String resName, String email, String street, String description) async {
     final String resID = resName.replaceAll(" ", "_");
-    final Map<int, int> coordinates =
-        {}; //probably will have to change to float at some point
+    Map<String, int> coordinates = {
+      "xcoords": 0,
+      "ycoords": 0,
+    };
+    //probably will have to change to float at some point
     CollectionReference collRef = firestore.collection("restaurants");
     await collRef.add({
       "coordinates": coordinates,
