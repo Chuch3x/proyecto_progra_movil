@@ -1,4 +1,6 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyecto_progra_movil/preferences/comida.dart';
 
 class FireStore {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -10,6 +12,16 @@ class FireStore {
       "favorites": [],
       "preferences": [],
       "username": username
+    });
+  }
+
+  Future<void> uploadPreferences(String? email, List<String> preferences) async {
+    CollectionReference collRef = firestore.collection("users");
+    await collRef.add({
+      "email": email,
+      "favorites": [],
+      "preferences": preferences,
+      "username": ""
     });
   }
 

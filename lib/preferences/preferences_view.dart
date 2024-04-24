@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
+import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_firestore.dart';
 import 'preferences_cubit.dart';
 import 'comida.dart';
 
@@ -11,16 +14,19 @@ class PreferencesView extends StatelessWidget {
   Widget build(BuildContext context) {
     final PreferencesCubit preferencesCubit =
         BlocProvider.of<PreferencesCubit>(context);
-
+    final FireStore DB = FireStore();
     final FireBaseAuthService auth = FireBaseAuthService();
-    // Llama a getCurrentUser() de forma asíncrona usando async-await
+    
 
-    _getCurrentUser() async {
+    Future<String?> _getCurrentEmail() async {
       final response = await auth.getCurrentUser();
-      // Imprime el usuario actual en la consola
-      print('hola' + response.toString());
+      if (response != null) {
+        return response.toString();
+      } else {
+        print("Error al cargar email");
+      }
     }
-    // Llama a _getCurrentUser() para obtener el usuario actual
+    // Llama a _getCurrentEmail() para obtener el usuario actual
 
     final List<Comida> foodPreferences = [
       Comida(
@@ -95,10 +101,12 @@ class PreferencesView extends StatelessWidget {
           floatingActionButton: Container(
             margin: EdgeInsets.all(10.0),
             child: FloatingActionButton(
-              onPressed: () {
+              onPressed: () async {
                 // Imprimir las preferencias seleccionadas en la consola
-                _getCurrentUser();
-                print('Preferencias seleccionadas: $selectedPreferences');
+                final email = await _getCurrentEmail();
+                print(email);
+                print(selectedPreferences);
+                await DB.uploadPreferences(email, selectedPreferences);
               },
               child: Icon(Icons.check),
             ),
