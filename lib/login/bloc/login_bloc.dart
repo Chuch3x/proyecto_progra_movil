@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_event.dart';
 import 'package:proyecto_progra_movil/login/bloc/login_state.dart';
 import 'package:proyecto_progra_movil/login/repository/login_repository.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginRepo loginRepo;
-
+  final FireBaseAuthService auth = FireBaseAuthService();
   LoginBloc({required this.loginRepo}) : super(LoginWaiting()) {
     on<LoginInput>((event, emit) async {
+      
       try {
         final validation =
             loginRepo.authenticateData(event.email, event.password);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'preferences_cubit.dart';
 import 'comida.dart';
 
@@ -9,7 +10,18 @@ class PreferencesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PreferencesCubit preferencesCubit = BlocProvider.of<PreferencesCubit>(context);
+
+    final FireBaseAuthService auth = FireBaseAuthService();
+    // Llama a getCurrentUser() de forma asíncrona usando async-await
     
+    _getCurrentUser() async {
+      final response = await auth.getCurrentUser();
+      // Imprime el usuario actual en la consola
+      print('hola' + response.toString());
+    }
+    // Llama a _getCurrentUser() para obtener el usuario actual
+    _getCurrentUser();
+
     final List<Comida> foodPreferences = [
       Comida(nombre: 'Italiana', imagenUrl: 'assets/images/opcion-italiana.jpg'),
       Comida(nombre: 'Mexicana', imagenUrl: 'assets/images/opcion-mexicana.jpg'),
@@ -89,4 +101,3 @@ class PreferencesView extends StatelessWidget {
     );
   }
 }
-

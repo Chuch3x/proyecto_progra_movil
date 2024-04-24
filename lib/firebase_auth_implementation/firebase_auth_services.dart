@@ -3,6 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FireBaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  Future<String?> getCurrentUser() async {
+    try {
+      User? user = await _auth.currentUser;
+      if (user != null) {
+        return user.email;
+      }
+    } catch (e) {
+      throw Exception("No se pudo obtener el usuario actual: ${e.toString()}");
+    }
+  }
+
   Future<User?> signUpWithEmailAndPassword(
       String email, String password) async {
     try {
