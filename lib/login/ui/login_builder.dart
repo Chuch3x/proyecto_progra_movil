@@ -14,53 +14,67 @@ class LoginScreenNew extends StatefulWidget {
 
 Widget LoginOnWait(emailController, passwordController) {
   return Card(
+    color: const Color.fromARGB(255, 255, 255, 255),
     elevation: 8.0,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     ),
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(97, 89, 206, 143),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(255, 89, 206, 144),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
             ),
-            child: const FittedBox(
-              fit: BoxFit.cover,
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontStyle: FontStyle.italic,
-                ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'Login',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.white,
               ),
             ),
           ),
-          const Text(
-            'Bienvenido a RutaGourmet',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-            ),
+        ),
+        const SizedBox(height: 10), // Añade espacio entre el contenedor verde y el texto
+        const Text(
+          'Bienvenido a RutaGourmet',
+          style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
           ),
-          TextFormField(
-            controller: emailController,
-            decoration: const InputDecoration(
-              labelText: 'Usuario',
-            ),
+        ),
+        const SizedBox(height: 10), // Añade espacio entre el texto y los campos de texto
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Usuario',
+                ),
+              ),
+              const SizedBox(height: 10), // Añade espacio entre los campos de texto
+              TextFormField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Contraseña',
+                ),
+              ),
+            ],
           ),
-          TextFormField(
-            controller: passwordController,
-            obscureText: true,
-            decoration: const InputDecoration(
-              labelText: 'Contraseña',
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }
