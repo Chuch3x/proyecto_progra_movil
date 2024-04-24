@@ -37,6 +37,8 @@ class _MapScreenState extends State<MapScreen> {
                 accessToken: dotenv.env['MAPBOX_ACCESS_TOKEN'],
                 initialCameraPosition: _initialCameraPosition,
                 onMapCreated: _onMapCreated,
+                onStyleLoadedCallback: () =>
+                    _onStyleLoadedCallback(state.latLng),
                 myLocationEnabled: true,
                 myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
                 minMaxZoomPreference: const MinMaxZoomPreference(14, 17),
@@ -54,5 +56,17 @@ class _MapScreenState extends State<MapScreen> {
 
   _onMapCreated(MapboxMapController controller) async {
     this.controller = controller;
+  }
+
+  _onStyleLoadedCallback(latLng) async {
+    {
+      await controller.addSymbol(
+        SymbolOptions(
+          geometry: latLng,
+          iconSize: 0.2,
+          iconImage: "assets/images/person-marker.png",
+        ),
+      );
+    }
   }
 }
