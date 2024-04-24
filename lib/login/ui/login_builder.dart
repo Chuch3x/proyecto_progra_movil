@@ -12,7 +12,7 @@ class LoginScreenNew extends StatefulWidget {
   State<LoginScreenNew> createState() => _LoginScreenNewState();
 }
 
-Widget LoginOnWait(emailController, passwordController) {
+Widget LoginOnWait(emailController, passwordController, context) {
   return Card(
     color: const Color.fromARGB(255, 255, 255, 255),
     elevation: 8.0,
@@ -32,8 +32,8 @@ Widget LoginOnWait(emailController, passwordController) {
               topRight: Radius.circular(10.0),
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+          child: const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Text(
               'Login',
               style: TextStyle(
@@ -43,7 +43,7 @@ Widget LoginOnWait(emailController, passwordController) {
             ),
           ),
         ),
-        const SizedBox(height: 10), // Añade espacio entre el contenedor verde y el texto
+        const SizedBox(height: 10),
         const Text(
           'Bienvenido a RutaGourmet',
           style: TextStyle(
@@ -51,7 +51,7 @@ Widget LoginOnWait(emailController, passwordController) {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 10), // Añade espacio entre el texto y los campos de texto
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -63,7 +63,7 @@ Widget LoginOnWait(emailController, passwordController) {
                   labelText: 'Usuario',
                 ),
               ),
-              const SizedBox(height: 10), // Añade espacio entre los campos de texto
+              const SizedBox(height: 10),
               TextFormField(
                 controller: passwordController,
                 obscureText: true,
@@ -73,6 +73,28 @@ Widget LoginOnWait(emailController, passwordController) {
               ),
             ],
           ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            String username = emailController.text.toString();
+            String password = passwordController.text.toString();
+            if (username.isNotEmpty && password.isNotEmpty) {
+              context
+                  .read<LoginBloc>()
+                  .add(LoginInput(email: username, password: password));
+            }
+          },
+          child: const Text('Log in'),
+        ),
+        TextButton(
+          onPressed: () {},
+          child: const Text('Olvidaste tu contraseña'),
+        ),
+        TextButton(
+          onPressed: () {
+            context.go("/register");
+          },
+          child: const Text('Eres nuevo registrate'),
         ),
       ],
     ),
@@ -107,7 +129,6 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
             'RUTA GOURMET',
             style: TextStyle(
               fontSize: 36.0,
-              fontWeight: FontWeight.bold,
               fontStyle: FontStyle.italic,
               color: Colors.white,
             ),
@@ -117,28 +138,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
               if (state is LoginWaiting) {
                 return Column(
                   children: [
-                    LoginOnWait(_emailController, _passwordController),
-                    ElevatedButton(
-                      onPressed: () {
-                        String username = _emailController.text.toString();
-                        String password = _passwordController.text.toString();
-                        if (username.isNotEmpty && password.isNotEmpty) {
-                          context.read<LoginBloc>().add(
-                              LoginInput(email: username, password: password));
-                        }
-                      },
-                      child: const Text('Log in'),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Olvidaste tu contraseña'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.go("/register");
-                      },
-                      child: const Text('Eres nuevo registrate'),
-                    ),
+                    LoginOnWait(_emailController, _passwordController, context),
                   ],
                 );
               } else if (state is LoginSuccesful) {
