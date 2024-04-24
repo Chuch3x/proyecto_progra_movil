@@ -5,9 +5,11 @@ class FireBaseAuthService {
 
   Future<String?> getCurrentUser() async {
     try {
-      User? user = await _auth.currentUser;
+      User? user = _auth.currentUser;
       if (user != null) {
         return user.email;
+      } else {
+        return null;
       }
     } catch (e) {
       throw Exception("No se pudo obtener el usuario actual: ${e.toString()}");

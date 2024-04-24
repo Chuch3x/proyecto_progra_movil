@@ -9,25 +9,30 @@ class PreferencesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PreferencesCubit preferencesCubit = BlocProvider.of<PreferencesCubit>(context);
+    final PreferencesCubit preferencesCubit =
+        BlocProvider.of<PreferencesCubit>(context);
 
     final FireBaseAuthService auth = FireBaseAuthService();
     // Llama a getCurrentUser() de forma asíncrona usando async-await
-    
+
     _getCurrentUser() async {
       final response = await auth.getCurrentUser();
       // Imprime el usuario actual en la consola
       print('hola' + response.toString());
     }
     // Llama a _getCurrentUser() para obtener el usuario actual
-    _getCurrentUser();
 
     final List<Comida> foodPreferences = [
-      Comida(nombre: 'Italiana', imagenUrl: 'assets/images/opcion-italiana.jpg'),
-      Comida(nombre: 'Mexicana', imagenUrl: 'assets/images/opcion-mexicana.jpg'),
+      Comida(
+          nombre: 'Italiana', imagenUrl: 'assets/images/opcion-italiana.jpg'),
+      Comida(
+          nombre: 'Mexicana', imagenUrl: 'assets/images/opcion-mexicana.jpg'),
       Comida(nombre: 'China', imagenUrl: 'assets/images/opcion-china.jpg'),
-      Comida(nombre: 'Japonesa', imagenUrl: 'assets/images/opcion-japonesa.jpg'),
-      Comida(nombre: 'Vegetariana', imagenUrl: 'assets/images/opcion-vegetariana.jpg'),
+      Comida(
+          nombre: 'Japonesa', imagenUrl: 'assets/images/opcion-japonesa.jpg'),
+      Comida(
+          nombre: 'Vegetariana',
+          imagenUrl: 'assets/images/opcion-vegetariana.jpg'),
     ];
 
     return BlocBuilder<PreferencesCubit, List<String>>(
@@ -35,13 +40,13 @@ class PreferencesView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-                      'ESCOGE TUS PREFERENCIAS',
-                      style: TextStyle(
-                        color: const Color.fromRGBO(89, 206, 143, 1),
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+              'ESCOGE TUS PREFERENCIAS',
+              style: TextStyle(
+                color: const Color.fromRGBO(89, 206, 143, 1),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           body: Container(
             padding: EdgeInsets.all(10.0),
@@ -77,7 +82,8 @@ class PreferencesView extends StatelessWidget {
                         SizedBox(height: 10),
                         Text(
                           comida.nombre,
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -91,6 +97,7 @@ class PreferencesView extends StatelessWidget {
             child: FloatingActionButton(
               onPressed: () {
                 // Imprimir las preferencias seleccionadas en la consola
+                _getCurrentUser();
                 print('Preferencias seleccionadas: $selectedPreferences');
               },
               child: Icon(Icons.check),
