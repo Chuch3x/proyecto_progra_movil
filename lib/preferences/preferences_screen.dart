@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'preferences_cubit.dart';
+import 'bloc/preferences_cubit.dart';
 import 'preferences_view.dart';
 
 class PreferencesPage extends StatelessWidget {

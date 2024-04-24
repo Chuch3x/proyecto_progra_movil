@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_firestore.dart';
-import 'preferences_cubit.dart';
+import 'bloc/preferences_cubit.dart';
 import 'comida.dart';
 
 class PreferencesView extends StatelessWidget {
