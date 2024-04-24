@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_firestore.dart';
 import 'preferences_cubit.dart';
@@ -16,7 +17,6 @@ class PreferencesView extends StatelessWidget {
         BlocProvider.of<PreferencesCubit>(context);
     final FireStore DB = FireStore();
     final FireBaseAuthService auth = FireBaseAuthService();
-    
 
     Future<String?> _getCurrentEmail() async {
       final response = await auth.getCurrentUser();
@@ -107,6 +107,7 @@ class PreferencesView extends StatelessWidget {
                 print(email);
                 print(selectedPreferences);
                 await DB.uploadPreferences(email, selectedPreferences);
+                context.go("/mainPage");
               },
               child: Icon(Icons.check),
             ),

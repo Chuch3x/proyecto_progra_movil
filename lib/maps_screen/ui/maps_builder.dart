@@ -9,14 +9,14 @@ import 'package:proyecto_progra_movil/maps_screen/bloc/maps_state.dart';
 import 'package:proyecto_progra_movil/shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MapsBuilder extends StatefulWidget {
-  const MapsBuilder({super.key});
+class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
 
   @override
-  State<MapsBuilder> createState() => _MapsBuilderState();
+  State<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapsBuilderState extends State<MapsBuilder> {
+class _MapScreenState extends State<MapScreen> {
   late MapboxMapController controller;
 
   @override
