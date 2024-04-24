@@ -74,7 +74,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
     Widget okButton = TextButton(
       child: const Text("OK"),
       onPressed: () {
-        context.go("/preferences");
+        context.go("/mainPage");
       },
     );
 
@@ -136,12 +136,9 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                   ],
                 );
               } else if (state is LoginFailed) {
-                return AlertDialog(
-                  title: const Text("Login Fallido"),
-                  content: const Text("reintente ingresar sus datos"),
-                  actions: [
-                    okButton,
-                  ],
+                return const AlertDialog(
+                  title: Text("Login Fallido"),
+                  content: Text("reintente ingresar sus datos"),
                 );
               } else {
                 return Container();

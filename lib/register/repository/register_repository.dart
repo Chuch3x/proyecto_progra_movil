@@ -17,6 +17,7 @@ class RegisterRepo {
     if (pass == passValidation) {
       await dataSource.createUserAuth(email, pass);
       await dataSource.saveUserDB(username, email, street, description);
+    
     }
   }
 }

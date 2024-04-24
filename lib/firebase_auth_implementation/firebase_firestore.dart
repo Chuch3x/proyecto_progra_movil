@@ -1,15 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyecto_progra_movil/preferences/comida.dart';
 
 class FireStore {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> uploadUser(String username, String email) async {
-    CollectionReference collRef = firestore.collection("users");
+    CollectionReference collRef = _firestore.collection("users");
     await collRef.add({
       "email": email,
       "favorites": [],
       "preferences": [],
       "username": username
+    });
+  }
+
+  Future<void> uploadPreferences(
+      String? email, List<String> preferences) async {
+    CollectionReference collRef = _firestore.collection("users");
+    await collRef.add({
+      "email": email,
+      "favorites": [],
+      "preferences": preferences,
+      "username": ""
     });
   }
 
@@ -21,7 +33,7 @@ class FireStore {
       "ycoords": 0,
     };
     //probably will have to change to float at some point
-    CollectionReference collRef = firestore.collection("restaurants");
+    CollectionReference collRef = _firestore.collection("restaurants");
     await collRef.add({
       "coordinates": coordinates,
       "description": description,

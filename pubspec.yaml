@@ -41,6 +41,10 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_dotenv: ^5.1.0
   go_router: ^13.2.4
+  mapbox_gl: ^0.16.0
+  shared_preferences: ^2.2.3
+  dio: ^5.4.3+1
+  location: ^6.0.1
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +75,8 @@ flutter:
     - assets/images/opcion-japonesa.jpg
     - assets/images/opcion-mexicana.jpg
     - assets/images/opcion-vegetariana.jpg
+    - assets/images/person-marker.png
+    - assets/images/person-marker.svg
     - assets/env
   #   - images/a_dot_ham.jpeg
 

@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
+import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_firestore.dart';
 import 'preferences_cubit.dart';
 import 'comida.dart';
 
@@ -8,14 +13,32 @@ class PreferencesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PreferencesCubit preferencesCubit = BlocProvider.of<PreferencesCubit>(context);
-    
+    final PreferencesCubit preferencesCubit =
+        BlocProvider.of<PreferencesCubit>(context);
+    final FireStore DB = FireStore();
+    final FireBaseAuthService auth = FireBaseAuthService();
+
+    Future<String?> _getCurrentEmail() async {
+      final response = await auth.getCurrentUser();
+      if (response != null) {
+        return response.toString();
+      } else {
+        print("Error al cargar email");
+      }
+    }
+    // Llama a _getCurrentEmail() para obtener el usuario actual
+
     final List<Comida> foodPreferences = [
-      Comida(nombre: 'Italiana', imagenUrl: 'assets/images/opcion-italiana.jpg'),
-      Comida(nombre: 'Mexicana', imagenUrl: 'assets/images/opcion-mexicana.jpg'),
+      Comida(
+          nombre: 'Italiana', imagenUrl: 'assets/images/opcion-italiana.jpg'),
+      Comida(
+          nombre: 'Mexicana', imagenUrl: 'assets/images/opcion-mexicana.jpg'),
       Comida(nombre: 'China', imagenUrl: 'assets/images/opcion-china.jpg'),
-      Comida(nombre: 'Japonesa', imagenUrl: 'assets/images/opcion-japonesa.jpg'),
-      Comida(nombre: 'Vegetariana', imagenUrl: 'assets/images/opcion-vegetariana.jpg'),
+      Comida(
+          nombre: 'Japonesa', imagenUrl: 'assets/images/opcion-japonesa.jpg'),
+      Comida(
+          nombre: 'Vegetariana',
+          imagenUrl: 'assets/images/opcion-vegetariana.jpg'),
     ];
 
     return BlocBuilder<PreferencesCubit, List<String>>(
@@ -23,13 +46,13 @@ class PreferencesView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-                      'ESCOGE TUS PREFERENCIAS',
-                      style: TextStyle(
-                        color: const Color.fromRGBO(89, 206, 143, 1),
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+              'ESCOGE TUS PREFERENCIAS',
+              style: TextStyle(
+                color: const Color.fromRGBO(89, 206, 143, 1),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           body: Container(
             padding: EdgeInsets.all(10.0),
@@ -65,7 +88,8 @@ class PreferencesView extends StatelessWidget {
                         SizedBox(height: 10),
                         Text(
                           comida.nombre,
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -77,9 +101,13 @@ class PreferencesView extends StatelessWidget {
           floatingActionButton: Container(
             margin: EdgeInsets.all(10.0),
             child: FloatingActionButton(
-              onPressed: () {
+              onPressed: () async {
                 // Imprimir las preferencias seleccionadas en la consola
-                print('Preferencias seleccionadas: $selectedPreferences');
+                final email = await _getCurrentEmail();
+                print(email);
+                print(selectedPreferences);
+                await DB.uploadPreferences(email, selectedPreferences);
+                context.go("/mainPage");
               },
               child: Icon(Icons.check),
             ),
@@ -89,4 +117,3 @@ class PreferencesView extends StatelessWidget {
     );
   }
 }
-

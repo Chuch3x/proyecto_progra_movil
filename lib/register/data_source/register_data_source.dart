@@ -5,7 +5,6 @@ import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_fire
 class RegDataSource {
   Future<User?> createUserAuth(String email, String password) async {
     final FireBaseAuthService auth = FireBaseAuthService();
-
     try {
       await auth.signUpWithEmailAndPassword(email, password);
     } catch (e) {
