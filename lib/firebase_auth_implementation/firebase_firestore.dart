@@ -16,13 +16,22 @@ class FireStore {
 
   Future<void> uploadPreferences(
       String? email, List<String> preferences) async {
-    CollectionReference collRef = _firestore.collection("users");
-    await collRef.add({
-      "email": email,
-      "favorites": [],
-      "preferences": preferences,
-      "username": ""
-    });
+    final CollectionReference collRef = _firestore.collection("users");
+    final QuerySnapshot querySnapshot =
+        await collRef.where("email", isEqualTo: email).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        final DocumentReference documentRef = documentSnapshot.reference;
+
+        await documentRef.update({
+          "preferences": preferences,
+        });
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
   }
 
   Future<void> uploadRestaurant(

@@ -17,4 +17,8 @@ class LoginRepo {
       throw Exception('Failed to authenticate user data: $e');
     }
   }
+
+  Future<void> getUserPreferences(username) async {
+    try {} catch (e) {}
+  }
 }
