@@ -23,3 +23,5 @@ class checkLoginUserPrefs extends LoginEvent {
 
   List<Object> get props => [email];
 }
+
+class LoginReload extends LoginEvent {}

@@ -146,6 +146,13 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
       },
     );
 
+    Widget okButtonFailed = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        context.read<LoginBloc>().add(LoginReload());
+      },
+    );
+
     return Scaffold(
         body: Container(
       decoration: const BoxDecoration(
@@ -196,9 +203,13 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                   ],
                 );
               } else if (state is LoginFailed) {
-                return const AlertDialog(
-                  title: Text("Login Fallido"),
-                  content: Text("reintente ingresar sus datos"),
+                _passwordController.clear();
+                return AlertDialog(
+                  title: const Text("Login Fallido"),
+                  content: const Text("reintente ingresar sus datos"),
+                  actions: [
+                    okButtonFailed,
+                  ],
                 );
               } else {
                 return Container();

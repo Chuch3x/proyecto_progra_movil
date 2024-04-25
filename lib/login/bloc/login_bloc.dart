@@ -44,5 +44,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginFailed());
       }
     });
+
+    on<LoginReload>((event, emit) => emit(LoginWaiting()));
   }
 }
