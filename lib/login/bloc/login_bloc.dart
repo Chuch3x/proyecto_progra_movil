@@ -9,12 +9,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final FireBaseAuthService auth = FireBaseAuthService();
   LoginBloc({required this.loginRepo}) : super(LoginWaiting()) {
     on<LoginInput>((event, emit) async {
-      
       try {
         final validation =
-            loginRepo.authenticateData(event.email, event.password);
-        if (validation) {
+            await loginRepo.authenticateData(event.email, event.password);
+        if (validation == true) {
           emit(LoginSuccesful(email: event.email));
+        } else {
+          emit(LoginFailed());
         }
       } catch (e) {
         emit(LoginFailed());

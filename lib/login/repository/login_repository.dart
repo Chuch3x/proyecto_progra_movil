@@ -5,9 +5,10 @@ class LoginRepo {
 
   LoginRepo({required this.loginDataSource});
 
-  bool authenticateData(username, password) {
+  Future<bool> authenticateData(username, password) async {
     try {
-      final response = loginDataSource.authenticateUser(username, password);
+      final response =
+          await loginDataSource.authenticateUser(username, password);
       if (response != null) {
         return true;
       }
