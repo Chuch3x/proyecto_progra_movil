@@ -7,6 +7,7 @@ class DataSource {
     try {
       final response =
           await auth.signInWithEmailAndPassword(username, password);
+      return response;
     } catch (e) {
       throw Exception('Failed to authenticate user data: $e');
     }
