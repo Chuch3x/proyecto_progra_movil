@@ -132,10 +132,17 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
 
   @override
   Widget build(BuildContext context) {
-    Widget okButton = TextButton(
+    Widget okButtonMain = TextButton(
       child: const Text("OK"),
       onPressed: () {
         context.go("/mainPage");
+      },
+    );
+
+    Widget okButtonPrefs = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        context.go("/preferences");
       },
     );
 
@@ -177,7 +184,15 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                   title: const Text("Login Exitoso"),
                   content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
                   actions: [
-                    okButton,
+                    okButtonPrefs,
+                  ],
+                );
+              } else if (state is LoginSuccesfulNoPrefs) {
+                return AlertDialog(
+                  title: const Text("Login Exitoso"),
+                  content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
+                  actions: [
+                    okButtonMain,
                   ],
                 );
               } else if (state is LoginFailed) {
