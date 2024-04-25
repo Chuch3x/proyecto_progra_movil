@@ -16,13 +16,22 @@ class FireStore {
 
   Future<void> uploadPreferences(
       String? email, List<String> preferences) async {
-    CollectionReference collRef = _firestore.collection("users");
-    await collRef.add({
-      "email": email,
-      "favorites": [],
-      "preferences": preferences,
-      "username": ""
-    });
+    final CollectionReference collRef = _firestore.collection("users");
+    final QuerySnapshot querySnapshot =
+        await collRef.where("email", isEqualTo: email).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      try {
+        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        final DocumentReference documentRef = documentSnapshot.reference;
+
+        await documentRef.update({
+          "preferences": preferences,
+        });
+      } catch (e) {
+        throw Exception("Error: ${e.toString()}");
+      }
+    }
   }
 
   Future<void> uploadRestaurant(
@@ -43,5 +52,34 @@ class FireStore {
       "restaurant_id": resID,
       "street": street,
     });
+  }
+
+  Future<List<String>?> getUserPreferencesArray(querySnapshot) async {
+    try {
+      final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+      final Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+      if (data != null && data.containsKey('preferences')) {
+        final List<dynamic> preferencesData = data['preferences'];
+        final List<String> preferences =
+            preferencesData.cast<String>().toList();
+        return preferences;
+      }
+      return null;
+    } catch (e) {
+      throw Exception("Error: ${e.toString()}");
+    }
+  }
+
+  Future<List<String>?> checkForUserPreferences(String email) async {
+    final CollectionReference collRef = _firestore.collection("users");
+    final QuerySnapshot querySnapshot =
+        await collRef.where("email", isEqualTo: email).get();
+    try {
+      final listPreferences = getUserPreferencesArray(querySnapshot);
+      return listPreferences;
+    } catch (e) {
+      throw Exception("Couldn't find user in DB");
+    }
   }
 }

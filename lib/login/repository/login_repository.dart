@@ -17,4 +17,11 @@ class LoginRepo {
       throw Exception('Failed to authenticate user data: $e');
     }
   }
+
+  Future<List<String>?> getUserPreferences(username) async {
+    try {
+      final preferencesList = loginDataSource.getUserPreferences(username);
+      return preferencesList;
+    } catch (e) {}
+  }
 }

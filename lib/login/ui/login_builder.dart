@@ -93,7 +93,8 @@ Widget LoginOnWait(emailController, passwordController) {
                   backgroundColor: MaterialStatePropertyAll<Color>(
                       Color.fromARGB(255, 89, 206, 144)),
                 ),
-                child: const Text('Log in', style: TextStyle(color: Colors.white)),
+                child:
+                    const Text('Log in', style: TextStyle(color: Colors.white)),
               ),
               TextButton(
                 onPressed: () {},
@@ -131,10 +132,24 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
 
   @override
   Widget build(BuildContext context) {
-    Widget okButton = TextButton(
+    Widget okButtonMain = TextButton(
       child: const Text("OK"),
       onPressed: () {
         context.go("/mainPage");
+      },
+    );
+
+    Widget okButtonPrefs = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        context.go("/preferences");
+      },
+    );
+
+    Widget okButtonFailed = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        context.read<LoginBloc>().add(LoginReload());
       },
     );
 
@@ -171,18 +186,30 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                     LoginOnWait(_emailController, _passwordController),
                   ],
                 );
-              } else if (state is LoginSuccesful) {
+              } else if (state is LoginSuccesfulPrefs) {
                 return AlertDialog(
                   title: const Text("Login Exitoso"),
                   content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
                   actions: [
-                    okButton,
+                    okButtonPrefs,
+                  ],
+                );
+              } else if (state is LoginSuccesfulNoPrefs) {
+                return AlertDialog(
+                  title: const Text("Login Exitoso"),
+                  content: Text("Bienvenido a Ruta Gourmet ${state.email}"),
+                  actions: [
+                    okButtonMain,
                   ],
                 );
               } else if (state is LoginFailed) {
-                return const AlertDialog(
-                  title: Text("Login Fallido"),
-                  content: Text("reintente ingresar sus datos"),
+                _passwordController.clear();
+                return AlertDialog(
+                  title: const Text("Login Fallido"),
+                  content: const Text("reintente ingresar sus datos"),
+                  actions: [
+                    okButtonFailed,
+                  ],
                 );
               } else {
                 return Container();
