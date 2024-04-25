@@ -17,7 +17,7 @@ class DataSource {
   Future<List<String>?> getUserPreferences(String username) async {
     final FireStore firestore = FireStore();
     try {
-      final preferences = await firestore.getUserPreferencesArray(username);
+      final preferences = await firestore.checkForUserPreferences(username);
       return preferences;
     } catch (e) {
       throw Exception("couldn't fetch preferences from firestore");

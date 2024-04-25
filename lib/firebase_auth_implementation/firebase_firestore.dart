@@ -54,25 +54,32 @@ class FireStore {
     });
   }
 
-  Future<List<String>?> getUserPreferencesArray(String email) async {
+  Future<List<String>?> getUserPreferencesArray(querySnapshot) async {
+    try {
+      final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+      final Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+      if (data != null && data.containsKey('preferences')) {
+        final List<dynamic> preferencesData = data['preferences'];
+        final List<String> preferences =
+            preferencesData.cast<String>().toList();
+        return preferences;
+      }
+      return null;
+    } catch (e) {
+      throw Exception("Error: ${e.toString()}");
+    }
+  }
+
+  Future<List<String>?> checkForUserPreferences(String email) async {
     final CollectionReference collRef = _firestore.collection("users");
     final QuerySnapshot querySnapshot =
         await collRef.where("email", isEqualTo: email).get();
-    if (querySnapshot.docs.isNotEmpty) {
-      try {
-        final DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
-        final Map<String, dynamic>? data =
-            documentSnapshot.data() as Map<String, dynamic>?;
-        if (data != null && data.containsKey('preferences')) {
-          final List<dynamic> preferencesData = data['preferences'];
-          final List<String> preferences =
-              preferencesData.cast<String>().toList();
-          return preferences;
-        }
-        return null;
-      } catch (e) {
-        throw Exception("Error: ${e.toString()}");
-      }
+    try {
+      final listPreferences = getUserPreferencesArray(querySnapshot);
+      return listPreferences;
+    } catch (e) {
+      throw Exception("Couldn't find user in DB");
     }
   }
 }
