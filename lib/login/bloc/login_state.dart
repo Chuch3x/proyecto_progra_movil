@@ -6,14 +6,25 @@ class LoginState {
 
 class LoginWaiting extends LoginState {}
 
-class LoginSuccesful extends LoginState {
+class LoginSuccesfulNoPrefs extends LoginState {
   String email;
 
-  LoginSuccesful({required this.email});
+  LoginSuccesfulNoPrefs({required this.email});
 
   @override
   List<Object> get props => [email];
 }
+
+class LoginSuccesfulPrefs extends LoginState {
+  String email;
+
+  LoginSuccesfulPrefs({required this.email});
+
+  @override
+  List<Object> get props => [email];
+}
+
+class LoginSuccesfulRestaurant extends LoginState {}
 
 class LoginFailed extends LoginState {}
 

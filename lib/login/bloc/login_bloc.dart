@@ -13,7 +13,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final validation =
             await loginRepo.authenticateData(event.email, event.password);
         if (validation == true) {
-          emit(LoginSuccesful(email: event.email));
+          add(checkLoginUserPrefs(email: event.email));
         } else {
           emit(LoginFailed());
         }
@@ -30,5 +30,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginFailed());
       }
     }); //Implementar la logica de la libreria de la huella digital
+
+    on<checkLoginUserPrefs>((event, emit) async {
+      try {
+        final List<String>? listPrefs =
+            await loginRepo.getUserPreferences(event.email);
+        if (listPrefs!.isNotEmpty) {
+          emit(LoginSuccesfulNoPrefs(email: event.email));
+        } else {
+          emit(LoginSuccesfulPrefs(email: event.email));
+        }
+      } catch (e) {
+        emit(LoginFailed());
+      }
+    });
   }
 }

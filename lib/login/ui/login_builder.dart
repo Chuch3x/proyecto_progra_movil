@@ -93,7 +93,8 @@ Widget LoginOnWait(emailController, passwordController) {
                   backgroundColor: MaterialStatePropertyAll<Color>(
                       Color.fromARGB(255, 89, 206, 144)),
                 ),
-                child: const Text('Log in', style: TextStyle(color: Colors.white)),
+                child:
+                    const Text('Log in', style: TextStyle(color: Colors.white)),
               ),
               TextButton(
                 onPressed: () {},
@@ -171,7 +172,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                     LoginOnWait(_emailController, _passwordController),
                   ],
                 );
-              } else if (state is LoginSuccesful) {
+              } else if (state is LoginSuccesfulPrefs) {
                 return AlertDialog(
                   title: const Text("Login Exitoso"),
                   content: Text("Bienvenido a Ruta Gourmet ${state.email}"),

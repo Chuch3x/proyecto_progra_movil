@@ -18,7 +18,10 @@ class LoginRepo {
     }
   }
 
-  Future<void> getUserPreferences(username) async {
-    try {} catch (e) {}
+  Future<List<String>?> getUserPreferences(username) async {
+    try {
+      final preferencesList = loginDataSource.getUserPreferences(username);
+      return preferencesList;
+    } catch (e) {}
   }
 }

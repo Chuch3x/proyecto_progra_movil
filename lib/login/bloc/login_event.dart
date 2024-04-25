@@ -15,3 +15,11 @@ class LoginInput extends LoginEvent {
 class LoginFaceID extends LoginEvent {}
 
 class LoginHuella extends LoginEvent {}
+
+class checkLoginUserPrefs extends LoginEvent {
+  final String email;
+
+  checkLoginUserPrefs({required this.email});
+
+  List<Object> get props => [email];
+}
