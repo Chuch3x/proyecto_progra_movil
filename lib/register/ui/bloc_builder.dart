@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_progra_movil/firebase_auth_implementation/firebase_auth_services.dart';
-import 'package:proyecto_progra_movil/login/ui/login_builder.dart';
-import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_bloc.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_event.dart';
 import 'package:proyecto_progra_movil/register/bloc/register_state.dart';
@@ -33,15 +31,20 @@ class _RegisterState extends State<RegisterScreen> {
   }
 
   Widget _buildHeaderText() {
-    return const Text(
-      'RUTA GOURMET',
-      style: TextStyle(
-        fontSize: 36.0,
-        fontWeight: FontWeight.bold,
-        fontStyle: FontStyle.italic,
-        color: Colors.white,
-      ),
-    );
+    return Container(
+              color: const Color.fromARGB(255, 89, 206, 144), // Fondo verde
+              padding: const EdgeInsets.symmetric(vertical: 1.0), // Ajustar espaciado
+              alignment: Alignment.center,
+              child: const Text(
+                'RUTA GOURMET',
+                style: TextStyle(
+                  fontSize: 36.0,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            );
   }
 
   TextFormField textValidation(
@@ -130,34 +133,80 @@ class _RegisterState extends State<RegisterScreen> {
           _buildHeaderText(),
           BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
             if (state is RegisterWaiting) {
-              return Column(
-                children: [
-                  _buildCardForms(_formKey),
-                  ElevatedButton(
-                    onPressed: () {
-                      final FormState form = _formKey.currentState!;
-                      if (form.validate()) {
-                        String password = _passwordController.text.toString();
-                        String email = _emailController.text.toString();
-                        String passwordValidation =
-                            _password2Controller.text.toString();
-                        String username = _userController.text.toString();
-                        context.read<RegisterBloc>().add(RegisterSave(
-                            email: email,
-                            password: password,
-                            passwordValidation: passwordValidation,
-                            username: username));
-                      }
-                    },
-                    child: const Text("Registrarse tu usuario"),
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Card(
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  elevation: 8.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      context.read<RegisterBloc>().add(RegisterChange(type: 1));
-                    },
-                    child: const Text('Registrate como restaurante'),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 89, 206, 144),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0),
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      _buildCardForms(_formKey),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            final FormState form = _formKey.currentState!;
+                            if (form.validate()) {
+                              String password =
+                                  _passwordController.text.toString();
+                              String email = _emailController.text.toString();
+                              String passwordValidation =
+                                  _password2Controller.text.toString();
+                              String username = _userController.text.toString();
+                              context.read<RegisterBloc>().add(RegisterSave(
+                                  email: email,
+                                  password: password,
+                                  passwordValidation: passwordValidation,
+                                  username: username));
+                            }
+                          }, style: const ButtonStyle(
+                            backgroundColor:  MaterialStatePropertyAll<Color>(Color.fromARGB(255, 89, 206, 144)),
+                          ),
+                          child: const Text("Registrarse", style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context
+                              .read<RegisterBloc>()
+                              .add(RegisterChange(type: 1));
+                        },
+                        child: const Text(
+                          'Registrate como restaurante',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color.fromRGBO(89, 206, 143, 1),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               );
             } else if (state is RegisterWaitingRestaurant) {
               return Column(

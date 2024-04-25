@@ -89,7 +89,11 @@ Widget LoginOnWait(emailController, passwordController) {
                         .add(LoginInput(email: username, password: password));
                   }
                 },
-                child: const Text('Log in'),
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll<Color>(
+                      Color.fromARGB(255, 89, 206, 144)),
+                ),
+                child: const Text('Log in', style: TextStyle(color: Colors.white)),
               ),
               TextButton(
                 onPressed: () {},
@@ -146,18 +150,19 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-              color: const Color.fromARGB(255, 89, 206, 144), // Fondo verde
-              padding: const EdgeInsets.symmetric(vertical: 1.0), // Ajustar espaciado
-              alignment: Alignment.center,
-              child: const Text(
-                'RUTA GOURMET',
-                style: TextStyle(
-                  fontSize: 36.0,
-                  fontStyle: FontStyle.italic,
-                  color: Colors.white,
-                ),
+            color: const Color.fromARGB(255, 89, 206, 144), // Fondo verde
+            padding:
+                const EdgeInsets.symmetric(vertical: 1.0), // Ajustar espaciado
+            alignment: Alignment.center,
+            child: const Text(
+              'RUTA GOURMET',
+              style: TextStyle(
+                fontSize: 36.0,
+                fontStyle: FontStyle.italic,
+                color: Colors.white,
               ),
             ),
+          ),
           BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
               if (state is LoginWaiting) {
