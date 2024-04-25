@@ -257,11 +257,17 @@ class _RegisterState extends State<RegisterScreen> {
                               String passwordValidation =
                                   _password2Controller.text.toString();
                               String username = _userController.text.toString();
-                              context.read<RegisterBloc>().add(RegisterSave(
-                                  email: email,
-                                  password: password,
-                                  passwordValidation: passwordValidation,
-                                  username: username));
+                              String description =
+                                  _descripcionController.text.toString();
+                              String street = _streetController.text.toString();
+                              context.read<RegisterBloc>().add(
+                                  RegisterRestaurant(
+                                      email: email,
+                                      password: password,
+                                      passwordValidation: passwordValidation,
+                                      restaurantName: username,
+                                      description: description,
+                                      streetName: street));
                             }
                           },
                           style: const ButtonStyle(
