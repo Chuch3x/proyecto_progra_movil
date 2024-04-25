@@ -13,55 +13,115 @@ class LoginScreenNew extends StatefulWidget {
 }
 
 Widget LoginOnWait(emailController, passwordController) {
-  return Card(
-    elevation: 8.0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(10.0),
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(97, 89, 206, 143),
-            ),
-            child: const FittedBox(
-              fit: BoxFit.cover,
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontStyle: FontStyle.italic,
+  return BlocBuilder<LoginBloc, LoginState>(
+    builder: (context, state) {
+      return Padding(
+        padding: const EdgeInsets.all(
+            20.0), // Establece el espacio alrededor del Card
+        child: Card(
+          color: const Color.fromARGB(255, 255, 255, 255),
+          elevation: 8.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: double.infinity,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 89, 206, 144),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10.0),
+                    topRight: Radius.circular(10.0),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(height: 10),
+              const Text(
+                'Bienvenido a RutaGourmet',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextFormField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        labelText: 'Usuario',
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: 'Contraseña',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  String username = emailController.text.toString();
+                  String password = passwordController.text.toString();
+                  if (username.isNotEmpty && password.isNotEmpty) {
+                    context
+                        .read<LoginBloc>()
+                        .add(LoginInput(email: username, password: password));
+                  }
+                },
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll<Color>(
+                      Color.fromARGB(255, 89, 206, 144)),
+                ),
+                child: const Text('Log in', style: TextStyle(color: Colors.white)),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Olvidaste tu contraseña',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color.fromRGBO(89, 206, 143, 1),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  context.go("/register");
+                },
+                child: const Text(
+                  'Eres nuevo registrate',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color.fromRGBO(89, 206, 143, 1),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const Text(
-            'Bienvenido a RutaGourmet',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          TextFormField(
-            controller: emailController,
-            decoration: const InputDecoration(
-              labelText: 'Usuario',
-            ),
-          ),
-          TextFormField(
-            controller: passwordController,
-            obscureText: true,
-            decoration: const InputDecoration(
-              labelText: 'Contraseña',
-            ),
-          ),
-        ],
-      ),
-    ),
+        ),
+      );
+    },
   );
 }
 
@@ -89,13 +149,18 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'RUTA GOURMET',
-            style: TextStyle(
-              fontSize: 36.0,
-              fontWeight: FontWeight.bold,
-              fontStyle: FontStyle.italic,
-              color: Colors.white,
+          Container(
+            color: const Color.fromARGB(255, 89, 206, 144), // Fondo verde
+            padding:
+                const EdgeInsets.symmetric(vertical: 1.0), // Ajustar espaciado
+            alignment: Alignment.center,
+            child: const Text(
+              'RUTA GOURMET',
+              style: TextStyle(
+                fontSize: 36.0,
+                fontStyle: FontStyle.italic,
+                color: Colors.white,
+              ),
             ),
           ),
           BlocBuilder<LoginBloc, LoginState>(
@@ -104,27 +169,6 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                 return Column(
                   children: [
                     LoginOnWait(_emailController, _passwordController),
-                    ElevatedButton(
-                      onPressed: () {
-                        String username = _emailController.text.toString();
-                        String password = _passwordController.text.toString();
-                        if (username.isNotEmpty && password.isNotEmpty) {
-                          context.read<LoginBloc>().add(
-                              LoginInput(email: username, password: password));
-                        }
-                      },
-                      child: const Text('Log in'),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Olvidaste tu contraseña'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.go("/register");
-                      },
-                      child: const Text('Eres nuevo registrate'),
-                    ),
                   ],
                 );
               } else if (state is LoginSuccesful) {
