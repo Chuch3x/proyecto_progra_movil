@@ -1,19 +1,25 @@
-import 'package:flutter/widgets.dart';
+import 'package:equatable/equatable.dart';
 
-class PreferencesState {
-  PreferencesState();
+class PreferencesState extends Equatable {
+  const PreferencesState();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class PreferencesWaiting extends PreferencesState {}
 
 class PreferencesLoaded extends PreferencesState {
-  
   final List<String> preferences;
 
-  PreferencesLoaded(this.preferences);
+  const PreferencesLoaded(this.preferences);
 
   @override
-  List<Object?> get props => [preferences];
+  List<Object?> get props => [preferences]; // Sobrescribir props con la lista de preferencias
 }
-class PreferencesSaved extends PreferencesState{}
-class PreferencesFailure extends PreferencesState{}
+
+class PreferencesSaved extends PreferencesState {}
+
+class PreferencesFailure extends PreferencesState {}
+
+
