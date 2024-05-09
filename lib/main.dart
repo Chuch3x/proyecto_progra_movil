@@ -7,7 +7,7 @@ import 'package:proyecto_progra_movil/login/ui/login_provider.dart';
 import 'package:proyecto_progra_movil/maps_screen/ui/maps_provider.dart';
 import 'package:proyecto_progra_movil/preferences/preferences_screen.dart';
 import 'package:proyecto_progra_movil/register/ui/bloc_provider.dart';
-
+import 'firebase_options.dart';
 //custom MENU icon
 const IconData menu = IconData(0xe3dc, fontFamily: 'MaterialIcons');
 
@@ -16,15 +16,8 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: dotenv.env['API_KEY']!,
-      authDomain: dotenv.env['AUTH_DOMAIN']!,
-      projectId: dotenv.env['PROJECT_ID']!,
-      storageBucket: dotenv.env['STORAGE_BUCKET']!,
-      messagingSenderId: dotenv.env['MESSAGING_SENDER_ID']!,
-      appId: dotenv.env['APP_ID']!,
-    ),
-  );
+  options: DefaultFirebaseOptions.currentPlatform,
+);
 
   runApp(const MyApp());
 }
